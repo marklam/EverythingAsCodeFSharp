@@ -1,0 +1,8 @@
+source https://api.nuget.org/v3/index.json
+
+nuget FSharp.Core
+nuget Microsoft.Azure.Functions.Worker 1.0.0
+nuget Microsoft.Azure.Functions.Worker.Extensions.Http 3.0.12
+nuget Microsoft.Azure.Functions.Worker.Sdk 1.0.1
+nuget Pulumi.FSharp >= 2.0
+nuget Pulumi.Github 3.3.1
