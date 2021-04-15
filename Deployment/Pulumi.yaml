@@ -1,0 +1,3 @@
+name: Deployment
+runtime: dotnet
+description: Deploy cloud components
