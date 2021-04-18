@@ -9,6 +9,7 @@ nuget Microsoft.NET.Test.Sdk 16.7.1
 nuget Pulumi.FSharp >= 2.0
 nuget Pulumi.Github 3.3.1
 nuget SchlenkR.FsHttp 5.1.0
+nuget Unquote
 nuget xunit 2.4.1
 nuget xunit.runner.visualstudio 2.4.3
 nuget Pulumi.AzureNative
