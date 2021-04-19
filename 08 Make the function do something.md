@@ -37,3 +37,60 @@ would produce the output
     Expected: True
     Actual:   False
 ```
+
+### Property-based tests
+Supposing with that test fixed, I was happy that the implementation was complete.
+```
+    let wordValue (text : string) : int =
+        text.ToUpper()
+        |> Seq.sumBy (fun letter -> (int letter) - (int 'A') + 1)
+```
+
+But *just in case*, I'll create some property-based tests. Property-based testing describes some
+properties of how the function should behave when given unknown inputs.
+
+Some properties that we could test:
+The value of some text is the same as the value of its all-upper-case version
+The value of some text is the same as the value of its all-lower-case version
+The value of some text should be the same as the value of the reversed of the text
+The value should be at most 26 * the character count
+```fsharp
+[<Property>]
+let ``Value of text is same as value of upper case`` (str : string) =
+    Calculate.wordValue str = Calculate.wordValue (str.ToUpper())
+
+[<Property>]
+let ``Value of text is same as value of lower case`` (str : string) =
+    Calculate.wordValue str = Calculate.wordValue (str.ToLower())
+
+[<Property>]
+let ``Value of text is same as value of reversed text`` (str : string) =
+    Calculate.wordValue str = Calculate.wordValue (reverse str)
+
+[<Property>]
+let ``Value of text is below maximum value`` (str : string) =
+    Calculate.wordValue str <= 26 * str.Length
+```
+And those tests failed instantly, because FsCheck supplied 'null' for the strings. 
+
+Since we're in F# we can be fairly certain that's not going to be something we pass to the wordValue calculation.
+By changing the parameter type in the `Property` test from `string` to `NonNull<string>` we can
+remove the `null`s from the tests.
+
+Next failure is
+```
+    FsCheck.Xunit.PropertyFailedException : 
+    Falsifiable, after 11 tests (1 shrink) (StdGen (824747591, 296879486)):
+    Original:
+    NonNull "X]"
+    Shrunk:
+    NonNull "]"
+```
+So the test failed for "X]", and then FsCheck tried to find a smaller repro case - "]". 
+
+After filtering out non-letters in the calculation, the tests pass. But I'll change the return value to 
+be a value and a warning message, and add a test of the warnings too.
+
+The property tests noticed that the warnings were different if the source text was reversed, so I 
+made the warning report each ignored character once, in character-code order.
+

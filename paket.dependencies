@@ -1,6 +1,7 @@
 source https://api.nuget.org/v3/index.json
 
 nuget coverlet.collector 1.3.0
+nuget FsCheck.Xunit
 nuget FSharp.Core
 nuget Microsoft.Azure.Functions.Worker 1.0.0
 nuget Microsoft.Azure.Functions.Worker.Extensions.Http 3.0.12
