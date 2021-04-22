@@ -25,10 +25,10 @@ dotnet restore
 ```
 Again using xUnit's [class fixtures](https://xunit.net/docs/shared-context#class-fixture) we can get the outputs from the Pulumi stack
 ```fsharp
-type PulumiStack (stackName, folder) =
+type PulumiStack (stackName, folder, envVars) =
     let outputs =
         task {
-            let  args    = LocalProgramArgs(stackName, folder)
+            let  args    = LocalProgramArgs(stackName, folder, EnvironmentVariables = envVars)
             let! stack   = LocalWorkspace.SelectStackAsync(args)
             let! outputs = stack.GetOutputsAsync()
             return outputs

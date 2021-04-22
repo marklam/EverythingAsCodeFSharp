@@ -4,10 +4,10 @@ open FSharp.Control.Tasks
 
 open Pulumi.Automation
 
-type PulumiStack (stackName, folder) =
+type PulumiStack (stackName, folder, envVars) =
     let outputs =
         task {
-            let  args    = LocalProgramArgs(stackName, folder)
+            let  args    = LocalProgramArgs(stackName, folder, EnvironmentVariables = envVars)
             let! stack   = LocalWorkspace.SelectStackAsync(args)
             let! outputs = stack.GetOutputsAsync()
             return outputs
