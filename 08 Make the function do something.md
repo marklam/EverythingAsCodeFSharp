@@ -94,3 +94,24 @@ be a value and a warning message, and add a test of the warnings too.
 The property tests noticed that the warnings were different if the source text was reversed, so I 
 made the warning report each ignored character once, in character-code order.
 
+### Returning the calculation results from the Azure Function
+I had to add some code to convert the result of the calculation (the value and any warnings) to json
+using `System.Text.Json`'s JsonSerializer.
+
+I also added some tests to the WordValues.Azure.Tests project to check the returned json.
+
+I also had to read the word to evaluate from the query parameters of the HttpRequest. Of course the
+first thing that happened was that I got `null`s  for the word where the parameter was missing from the URL.
+
+I guess that serves me right for claiming we wouldn't see those in F#. To isolate them, I added 
+```fsharp
+module NameValueCollection =
+    let tryFind (key : string) (nvc : NameValueCollection) =
+        nvc.[key] |> Option.ofObj
+```
+to turn `null`s into Option.None
+
+I also found that I could speed up the function hosting under the test by passing `--no-build` provided
+I can find the build output folder for the function assembly, so I added some code to the tests to 'guess' that path.
+
+

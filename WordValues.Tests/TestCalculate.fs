@@ -24,6 +24,10 @@ let ``Value of 'hello' is correct`` () =
 let ``No warnings produced for 'hello'`` () =
       test <@ (Calculate.wordValue "hello").Warning = None @>
 
+[<Fact>]
+let ``Value of 'HELLO 123' contains warnings`` () =
+      test <@ (Calculate.wordValue "HELLO 123").Warning = Some "Ignored ' ','1','2','3'" @>
+
 [<Property>]
 let ``Value of text is same as value of upper case`` (nnstr : NonNull<string>) =
     let str = nnstr.Get
