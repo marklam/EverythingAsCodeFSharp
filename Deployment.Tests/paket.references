@@ -1,0 +1,8 @@
+Microsoft.NET.Test.Sdk
+SchlenkR.FsHttp
+xunit
+xunit.runner.visualstudio
+coverlet.collector
+FSharp.Core
+Pulumi.Automation
+Ply
