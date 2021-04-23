@@ -23,6 +23,7 @@ type TestAzureFun (func : WordValuesAzureFuncInstance) =
 
         let response =
             get testUri.AbsoluteUri
+            |> useHttpClient connection.Client
             |> Request.send
 
         Assert.Equal(HttpStatusCode.BadRequest, response.statusCode)
