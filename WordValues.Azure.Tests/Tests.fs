@@ -36,6 +36,7 @@ type TestAzureFun (func : WordValuesAzureFuncInstance) =
 
         let response =
             get testUri.AbsoluteUri
+            |> useHttpClient connection.Client
             |> Request.send
 
         Assert.Equal(HttpStatusCode.OK, response.statusCode)
@@ -48,6 +49,7 @@ type TestAzureFun (func : WordValuesAzureFuncInstance) =
 
         let response =
             get testUri.AbsoluteUri
+            |> useHttpClient connection.Client
             |> Request.send
 
         Assert.Equal(HttpStatusCode.OK, response.statusCode)
