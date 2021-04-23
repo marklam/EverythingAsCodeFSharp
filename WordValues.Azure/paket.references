@@ -2,3 +2,4 @@ Microsoft.Azure.Functions.Worker.Sdk
 Microsoft.Azure.Functions.Worker
 Microsoft.Azure.Functions.Worker.Extensions.Http
 FSharp.Core
+System.Text.Json
