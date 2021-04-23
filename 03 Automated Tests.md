@@ -18,7 +18,7 @@ To do this, we can use xUnit's [class fixtures](https://xunit.net/docs/shared-co
 - When a test needs to access the function, check the `func.exe` process has not exited, and try to connect to that port. If all is ok, return some connection context.
 - When the fixture is disposed, kill the process we started.
 ### Testing the Http-Triggered function
-In the test case, we can use the class fixture to get the connection (which will check that the hosting process hasn't gone away)
+In the test case, we can use the class fixture to get the base Url (which will check that the hosting process hasn't gone away)
 
 [FsHttp](https://github.com/ronaldschlenker/FsHttp) provides helpers to make the request/response code simple, and then the status code and response body can be checked in the test.
 

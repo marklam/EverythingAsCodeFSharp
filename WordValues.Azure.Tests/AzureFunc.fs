@@ -23,9 +23,7 @@ module Path =
         Path.Combine(components)
 
 type AzureFuncConnection =
-    { Client : HttpClient; BaseUri : Uri }
-    interface IDisposable with
-        member this.Dispose() = this.Client.Dispose()
+    { BaseUri : Uri }
 
 type AzureFuncInstance private (folder, port, ?extraFuncExeParams) =
     let extraFuncExeParams = defaultArg extraFuncExeParams ""
@@ -45,10 +43,7 @@ type AzureFuncInstance private (folder, port, ?extraFuncExeParams) =
         if proc.HasExited then
             Error $"func.exe has exited with error code %d{proc.ExitCode}"
         elif portFound then
-            Ok {
-                Client = new HttpClient(Timeout = TimeSpan.FromSeconds (float timeoutSeconds))
-                BaseUri = Uri($"http://localhost:%d{port}", UriKind.Absolute)
-            }
+            Ok { BaseUri = Uri($"http://localhost:%d{port}", UriKind.Absolute) }
         else
             Error $"func.exe did not open port %d{port} within %d{timeoutSeconds} seconds"
 

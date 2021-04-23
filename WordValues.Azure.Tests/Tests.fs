@@ -18,12 +18,11 @@ type TestAzureFun (func : WordValuesAzureFuncInstance) =
 
     [<Fact>]
     member _.``WordValue with no query parameter returns an error`` () =
-        use connection = func.GetConnection()
+        let connection = func.GetConnection()
         let testUri = Uri(connection.BaseUri, "/api/WordValue")
 
         let response =
             get testUri.AbsoluteUri
-            |> useHttpClient connection.Client
             |> Request.send
 
         Assert.Equal(HttpStatusCode.BadRequest, response.statusCode)
@@ -31,12 +30,11 @@ type TestAzureFun (func : WordValuesAzureFuncInstance) =
 
     [<Fact>]
     member _.``WordValue returns the correct message`` () =
-        use connection = func.GetConnection()
+        let connection = func.GetConnection()
         let testUri = Uri(connection.BaseUri, "/api/WordValue?word=Hello")
 
         let response =
             get testUri.AbsoluteUri
-            |> useHttpClient connection.Client
             |> Request.send
 
         Assert.Equal(HttpStatusCode.OK, response.statusCode)
@@ -44,12 +42,11 @@ type TestAzureFun (func : WordValuesAzureFuncInstance) =
 
     [<Fact>]
     member _.``WordValue returns warnings for non-letters`` () =
-        use connection = func.GetConnection()
+        let connection = func.GetConnection()
         let testUri = Uri(connection.BaseUri, "/api/WordValue?word=" + Uri.encodeUrlParam "Hello 123")
 
         let response =
             get testUri.AbsoluteUri
-            |> useHttpClient connection.Client
             |> Request.send
 
         Assert.Equal(HttpStatusCode.OK, response.statusCode)
