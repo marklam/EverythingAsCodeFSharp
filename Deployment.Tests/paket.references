@@ -6,3 +6,4 @@ coverlet.collector
 FSharp.Core
 Pulumi.Automation
 Ply
+System.Text.Json
