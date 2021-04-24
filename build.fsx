@@ -10,7 +10,13 @@
 
 open Fake.Core
 
-Target.create "Noop" ignore
+module Target =
+    let create name description body =
+        Target.description description
+        Target.create name body
+        name
+
+let noop = Target.create "Noop" "Does nothing" ignore
 
 // Default target
-Target.runOrDefault "Noop"
+Target.runOrDefault noop
