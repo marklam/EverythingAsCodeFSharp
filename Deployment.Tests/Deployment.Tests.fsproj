@@ -5,8 +5,10 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="paket.references" />
     <Compile Include="PulumiStack.fs" />
     <Compile Include="Tests.fs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

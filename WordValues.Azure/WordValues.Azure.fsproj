@@ -8,6 +8,7 @@
     <_FunctionsSkipCleanOutput>true</_FunctionsSkipCleanOutput>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="paket.references" />
     <Compile Include="Function.fs" />
     <Compile Include="Program.fs" />
     <None Include="host.json">

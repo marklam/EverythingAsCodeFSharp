@@ -15,6 +15,26 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "WordValues.Tests", "WordVal
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Deployment.Tests", "Deployment.Tests\Deployment.Tests.fsproj", "{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{FF70A0EE-9602-4332-A983-FF94D03414A7}"
+	ProjectSection(SolutionItems) = preProject
+		01 Getting Started.md = 01 Getting Started.md
+		02 Creating an Azure Function.md = 02 Creating an Azure Function.md
+		03 Automated Tests.md = 03 Automated Tests.md
+		04 Using Paket.md = 04 Using Paket.md
+		05 Visual Studio Solution.md = 05 Visual Studio Solution.md
+		06 Deploy to Azure.md = 06 Deploy to Azure.md
+		07 Test Deployed Azure Function.md = 07 Test Deployed Azure Function.md
+		08 Make the function do something.md = 08 Make the function do something.md
+		09 First Tidy-up.md = 09 First Tidy-up.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AFF34F9C-C317-453C-9F0F-EBF2930C1963}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		paket.dependencies = paket.dependencies
+		paket.lock = paket.lock
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,18 +81,6 @@ Global
 		{59701097-CED8-4D16-A6B5-BC39E7CCA2A1}.Release|x64.Build.0 = Release|Any CPU
 		{59701097-CED8-4D16-A6B5-BC39E7CCA2A1}.Release|x86.ActiveCfg = Release|Any CPU
 		{59701097-CED8-4D16-A6B5-BC39E7CCA2A1}.Release|x86.Build.0 = Release|Any CPU
-		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Debug|x64.Build.0 = Debug|Any CPU
-		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Debug|x86.Build.0 = Debug|Any CPU
-		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|x64.ActiveCfg = Release|Any CPU
-		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|x64.Build.0 = Release|Any CPU
-		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|x86.ActiveCfg = Release|Any CPU
-		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|x86.Build.0 = Release|Any CPU
 		{D7ADA403-74DF-425E-9108-83BEF8539779}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D7ADA403-74DF-425E-9108-83BEF8539779}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7ADA403-74DF-425E-9108-83BEF8539779}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -97,6 +105,18 @@ Global
 		{3443F634-B556-4948-8507-D64557811D08}.Release|x64.Build.0 = Release|Any CPU
 		{3443F634-B556-4948-8507-D64557811D08}.Release|x86.ActiveCfg = Release|Any CPU
 		{3443F634-B556-4948-8507-D64557811D08}.Release|x86.Build.0 = Release|Any CPU
+		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Debug|x64.Build.0 = Debug|Any CPU
+		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Debug|x86.Build.0 = Debug|Any CPU
+		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|x64.ActiveCfg = Release|Any CPU
+		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|x64.Build.0 = Release|Any CPU
+		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|x86.ActiveCfg = Release|Any CPU
+		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
