@@ -5,15 +5,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-    <ItemGroup>
+  <ItemGroup>
     <None Include="paket.references" />
     <None Include="Pulumi.yaml" />
     <Compile Include="PulumiExtras.fs" />
     <Compile Include="PulumiExtras.Azure.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
-
-    <ItemGroup />
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

@@ -10,6 +10,5 @@
     <Compile Include="PulumiStack.fs" />
     <Compile Include="Tests.fs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
