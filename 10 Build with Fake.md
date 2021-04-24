@@ -57,5 +57,37 @@ Target.runOrDefault noop
 ```
 And now the magic string "Noop" only appears once, and any subesquent use is a variable and mis-types get caught by the syntax checking. Also it hides the built-it Target.create, so I can't accidentally use the original one. And also (again) it forces me to add a description for the target.
 
+### Build and test
+To build with the dotnet cli, I needed to add the package `nuget Fake.DotNet.Cli`. But fake doesn't automatically update the referenced packages while the lock file exists, so I also deleted `build.fsx.lock` and re-ran `dotnet fake build`. After re-opening the build.fsx in the editor, I got intellisense on Fake.DotNet references.
 
+The `Fake.DotNet.Cli` package provides the `Fake.DotNet` namespace and the `DotNet.build` and `DotNet.test` methods. The first parameter to these methods allows you to customise the parameters, or leave them unchanged by passing `id`.
 
+```fsharp
+let solutionFile = "EverythingAsCodeFSharp.sln"
+
+let build =
+    Target.create "Build" "Build the solution" (fun _ ->
+        DotNet.build id solutionFile
+    )
+
+// Default target
+Target.runOrDefault build
+```
+So now `dotnet fake build` builds the solution.
+```fsharp
+let unitTests =
+    Target.create "UnitTests" "Run the unit tests" (fun _ ->
+        DotNet.test id "WordValues.Tests"
+    )
+```
+And `dotnet fake build -t UnitTests` runs the tests.
+
+### Dependencies
+```fsharp
+open Fake.Core.TargetOperators
+
+...
+
+build ==> unitTests
+```
+tells Fake that to build the `unitTests` target, we need to build the `build` target first.
