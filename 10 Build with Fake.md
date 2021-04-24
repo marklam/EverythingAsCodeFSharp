@@ -91,3 +91,9 @@ open Fake.Core.TargetOperators
 build ==> unitTests
 ```
 tells Fake that to build the `unitTests` target, we need to build the `build` target first.
+
+### dotnet publish the Azure Function and test under func.exe
+Basically just the `dotnet publish` and `dotnet test` tasks, along with the dependency.
+```fsharp
+build ==> publishAzureFunc ==> localTestAzureFunc
+```

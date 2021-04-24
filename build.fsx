@@ -31,7 +31,18 @@ let unitTests =
         DotNet.test id "WordValues.Tests"
     )
 
+let publishAzureFunc =
+    Target.create "PublishAzureFunc" "Publish the Azure Function" (fun _ ->
+        DotNet.publish id "WordValues.Azure"
+    )
+
+let localTestAzureFunc =
+    Target.create "LocalTestAzureFunc" "Test the Azure Function locally" (fun _ ->
+        DotNet.test id "WordValues.Azure.Tests"
+    )
+
 build ==> unitTests
+build ==> publishAzureFunc ==> localTestAzureFunc
 
 // Default target
 Target.runOrDefault build
