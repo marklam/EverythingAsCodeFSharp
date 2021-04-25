@@ -19,4 +19,45 @@ dotnet new lambda.CustomRuntimeFunction --name WordValues.Aws --language F#
 move WordValues.Aws\src\WordValues.Aws ..
 move WordValues.Aws\test\WordValues.Aws.Tests ..
 ```
-And then tweak the projects...
+### Tweaking the projects
+In the WordValues.Aws.fsproj file
+```diff
+-  <ItemGroup>
+-     <PackageReference Include="Amazon.Lambda.Core"  Version="1.2.0" />
+-     <PackageReference Include="Amazon.Lambda.- RuntimeSupport" Version="1.3.0" />
+-     <PackageReference Include="Amazon.Lambda.- Serialization.SystemTextJson" Version="2.1.0" />
+-  </ItemGroup>
+```
+And then add the packages with paket
+```cmd
+dotnet paket add FSharp.Core --project WordValues.Aws
+dotnet paket add Amazon.Lambda.Core --project WordValues.Aws
+dotnet paket add Amazon.Lambda.RuntimeSupport --project WordValues.Aws
+dotnet paket add Amazon.Lambda.Serialization.SystemTextJson --project WordValues.Aws
+```
+For WordValues.Aws.Tests.fsproj
+```diff
+-  <ItemGroup>
+-    <PackageReference Include="Amazon.Lambda.Core" Version="1.2.0" />
+-    <PackageReference Include="Amazon.Lambda.TestUtilities" Version="1.2.0" />
+-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+-    <PackageReference Include="xunit" Version="2.3.1" />
+-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+-    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+-  </ItemGroup>
+  <ItemGroup>
+-    <ProjectReference Include="..\..\src\WordValues.Aws\WordValues.Aws.fsproj" />
++    <ProjectReference Include="..\WordValues.Aws\WordValues.Aws.fsproj" />
+  </ItemGroup>
+```
+And fix up the package references
+```cmd
+dotnet paket add FSharp.Core --project WordValues.Aws.Tests
+dotnet paket add Microsoft.NET.Test.Sdk --project WordValues.Aws.Tests
+dotnet paket add Amazon.Lambda.Core --project WordValues.Aws.Tests
+dotnet paket add Amazon.Lambda.TestUtilities --project WordValues.Aws.Tests
+dotnet paket add Microsoft.NET.Test.Sdk --project WordValues.Aws.Tests
+dotnet paket add xunit --project WordValues.Aws.Tests
+dotnet paket add xunit.runner.visualstudio --project WordValues.Aws.Tests
+dotnet paket add coverlet.collector --project WordValues.Aws.Tests
+```

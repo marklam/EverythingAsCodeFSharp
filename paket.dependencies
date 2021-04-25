@@ -1,6 +1,10 @@
 source https://api.nuget.org/v3/index.json
 
 storage: none
+nuget Amazon.Lambda.Core
+nuget Amazon.Lambda.RuntimeSupport
+nuget Amazon.Lambda.Serialization.SystemTextJson
+nuget Amazon.Lambda.TestUtilities
 nuget coverlet.collector 1.3.0
 nuget FsCheck.Xunit
 nuget FSharp.Core
