@@ -11,6 +11,7 @@
 
 open Fake.Core
 open Fake.Core.TargetOperators
+open Fake.IO.FileSystemOperators
 open Fake.DotNet
 
 module Target =
@@ -19,7 +20,16 @@ module Target =
         Target.create name body
         name
 
+let solutionFolder = __SOURCE_DIRECTORY__
 let solutionFile = "EverythingAsCodeFSharp.sln"
+
+let runExe exe workingFolder arguments =
+    Command.RawCommand (exe, Arguments.ofList arguments)
+    |> CreateProcess.fromCommand
+    |> CreateProcess.withWorkingDirectory workingFolder
+    |> CreateProcess.ensureExitCode
+    |> Proc.run
+    |> ignore
 
 let build =
     Target.create "Build" "Build the solution" (fun _ ->
@@ -41,8 +51,22 @@ let localTestAzureFunc =
         DotNet.test id "WordValues.Azure.Tests"
     )
 
+let pulumiDeploy =
+    Target.create "PulumiDeploy" "Test the Azure Function locally" (fun _ ->
+        runExe
+            "pulumi"
+            (solutionFolder</>"Deployment")
+            [ "up"; "-y"; "-s"; "dev" ]
+    )
+
+let deployedTestAzureFunc =
+    Target.create "DeployedTestAzureFunc" "Test the Azure Function after deployment" (fun _ ->
+        DotNet.test id "Deployment.Tests"
+    )
+
 build ==> unitTests
 build ==> publishAzureFunc ==> localTestAzureFunc
+pulumiDeploy ==> deployedTestAzureFunc
 
 // Default target
 Target.runOrDefault build

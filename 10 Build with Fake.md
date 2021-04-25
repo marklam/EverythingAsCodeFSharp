@@ -97,3 +97,34 @@ Basically just the `dotnet publish` and `dotnet test` tasks, along with the depe
 ```fsharp
 build ==> publishAzureFunc ==> localTestAzureFunc
 ```
+### deploy to Azure and then test the deployed version
+With a helper to run exes and check the return code
+```fsharp
+let runExe exe workingFolder arguments =
+    Command.RawCommand (exe, Arguments.ofList arguments)
+    |> CreateProcess.fromCommand
+    |> CreateProcess.withWorkingDirectory workingFolder
+    |> CreateProcess.ensureExitCode
+    |> Proc.run
+    |> ignore
+```
+(the ignore is because Proc.run returns a `ProcessResult` but we already set up checking with `ensureExitCode`)
+
+We can define targets to run the Pulumi deployment and make running the Deployment.Tests suites dependent on that.
+```fsharp
+let pulumiDeploy =
+    Target.create "PulumiDeploy" "Test the Azure Function locally" (fun _ ->
+        runExe
+            "pulumi"
+            (solutionFolder</>"Deployment")
+            [ "up"; "-y"; "-s"; "dev" ]
+    )
+
+let deployedTestAzureFunc =
+    Target.create "DeployedTestAzureFunc" "Test the Azure Function after deployment" (fun _ ->
+        DotNet.test id "Deployment.Tests"
+    )
+
+pulumiDeploy ==> deployedTestAzureFunc
+```
+The `</>` operator comes from `Fake.IO.FilesystemOperators` and does the a similar thing to `Path.Combine`.
