@@ -1,6 +1,7 @@
 source https://api.nuget.org/v3/index.json
 
 storage: none
+nuget Amazon.Lambda.APIGatewayEvents
 nuget Amazon.Lambda.Core
 nuget Amazon.Lambda.RuntimeSupport
 nuget Amazon.Lambda.Serialization.SystemTextJson

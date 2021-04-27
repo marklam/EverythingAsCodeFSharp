@@ -61,3 +61,34 @@ dotnet paket add xunit --project WordValues.Aws.Tests
 dotnet paket add xunit.runner.visualstudio --project WordValues.Aws.Tests
 dotnet paket add coverlet.collector --project WordValues.Aws.Tests
 ```
+Now the project should build and its tests should pass.
+### Making the AWS Lambda do the same thing the Azure Function does
+We need to change the return type of the lambda to a APIGatewayProxyResponse, which requires another package.
+```cmd
+dotnet paket add Amazon.Lambda.APIGatewayEvents --project WordValues.Aws
+```
+Then make the Aws Lambda function similar to the Azure Function version.
+```diff
+-    let functionHandler (input: string) (context: ILambdaContext) =
++    let functionHandler (word : string) (context: ILambdaContext) =
+
+-        match input with
+-        | null -> String.Empty
+-        | _ -> input.ToUpper()
++        if not (isNull word) then
++            let result = Calculate.wordValue word
++            let content = JsonSerializer.Serialize<_>(result, JsonSerializerOptions(IgnoreNullValues = true))
++
++            APIGatewayProxyResponse(
++                StatusCode = int HttpStatusCode.OK,
++                Body       = content,
++                Headers    = dict [ ("Content-Type", "application/json") ]
++                )
++        else
++            APIGatewayProxyResponse(
++                StatusCode = int HttpStatusCode.BadRequest,
++                Body       = "Required query parameter 'word' was missing",
++                Headers    = dict [ ("Content-Type", "text/plain;charset=utf-8") ]
++                )
+```
+And finally, the tests should be replaced with 'ports' of the Azure Function tests.
