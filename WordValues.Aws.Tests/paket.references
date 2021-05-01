@@ -1,0 +1,7 @@
+FSharp.Core
+Amazon.Lambda.Core
+Microsoft.NET.Test.Sdk
+Amazon.Lambda.TestUtilities
+xunit
+xunit.runner.visualstudio
+coverlet.collector

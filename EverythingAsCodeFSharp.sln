@@ -15,6 +15,10 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "WordValues.Tests", "WordVal
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Deployment.Tests", "Deployment.Tests\Deployment.Tests.fsproj", "{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}"
 EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "WordValues.Aws", "WordValues.Aws\WordValues.Aws.fsproj", "{A7A1FDB0-020A-44FA-8203-2281506F70CC}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "WordValues.Aws.Tests", "WordValues.Aws.Tests\WordValues.Aws.Tests.fsproj", "{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{FF70A0EE-9602-4332-A983-FF94D03414A7}"
 	ProjectSection(SolutionItems) = preProject
 		01 Getting Started.md = 01 Getting Started.md
@@ -119,6 +123,30 @@ Global
 		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|x64.Build.0 = Release|Any CPU
 		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|x86.ActiveCfg = Release|Any CPU
 		{26F46E8F-0D69-4A1B-85A4-64BCB56B649D}.Release|x86.Build.0 = Release|Any CPU
+		{A7A1FDB0-020A-44FA-8203-2281506F70CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7A1FDB0-020A-44FA-8203-2281506F70CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7A1FDB0-020A-44FA-8203-2281506F70CC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A7A1FDB0-020A-44FA-8203-2281506F70CC}.Debug|x64.Build.0 = Debug|Any CPU
+		{A7A1FDB0-020A-44FA-8203-2281506F70CC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A7A1FDB0-020A-44FA-8203-2281506F70CC}.Debug|x86.Build.0 = Debug|Any CPU
+		{A7A1FDB0-020A-44FA-8203-2281506F70CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7A1FDB0-020A-44FA-8203-2281506F70CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7A1FDB0-020A-44FA-8203-2281506F70CC}.Release|x64.ActiveCfg = Release|Any CPU
+		{A7A1FDB0-020A-44FA-8203-2281506F70CC}.Release|x64.Build.0 = Release|Any CPU
+		{A7A1FDB0-020A-44FA-8203-2281506F70CC}.Release|x86.ActiveCfg = Release|Any CPU
+		{A7A1FDB0-020A-44FA-8203-2281506F70CC}.Release|x86.Build.0 = Release|Any CPU
+		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Debug|x64.Build.0 = Debug|Any CPU
+		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Debug|x86.Build.0 = Debug|Any CPU
+		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Release|x64.ActiveCfg = Release|Any CPU
+		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Release|x64.Build.0 = Release|Any CPU
+		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Release|x86.ActiveCfg = Release|Any CPU
+		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
