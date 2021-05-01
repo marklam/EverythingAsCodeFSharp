@@ -26,11 +26,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		07 Test Deployed Azure Function.md = 07 Test Deployed Azure Function.md
 		08 Make the function do something.md = 08 Make the function do something.md
 		09 First Tidy-up.md = 09 First Tidy-up.md
+		10 Build with Fake.md = 10 Build with Fake.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AFF34F9C-C317-453C-9F0F-EBF2930C1963}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		build.fsx = build.fsx
 		paket.dependencies = paket.dependencies
 		paket.lock = paket.lock
 	EndProjectSection
