@@ -31,6 +31,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		08 Make the function do something.md = 08 Make the function do something.md
 		09 First Tidy-up.md = 09 First Tidy-up.md
 		10 Build with Fake.md = 10 Build with Fake.md
+		11 Create an AWS Lambda.md = 11 Create an AWS Lambda.md
+		12 Configure the AWS account.md = 12 Configure the AWS account.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AFF34F9C-C317-453C-9F0F-EBF2930C1963}"

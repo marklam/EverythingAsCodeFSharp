@@ -16,6 +16,7 @@ nuget Microsoft.Azure.Functions.Worker.Sdk
 nuget Microsoft.NET.Test.Sdk
 nuget Ply
 nuget Pulumi.Automation
+nuget Pulumi.Aws
 nuget Pulumi.AzureNative
 nuget Pulumi.FSharp
 nuget Pulumi.Github
