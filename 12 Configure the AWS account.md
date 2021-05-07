@@ -1,6 +1,10 @@
 ## Configure the AWS account
+### First login
+- Log in to the console at https://console.aws.amazon.com/lambda
+- Find the IAM dashboard
+- Enable MFA
 
-Following the AWS IAM instructions for [creating non-root users](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html)
+Then, following the AWS IAM instructions for [creating non-root users](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html) we can set up some users for our deployments.
 ### Create a project
 ```cmd
 mkdir AwsConfig
