@@ -43,6 +43,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		paket.lock = paket.lock
 	EndProjectSection
 EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Deployment.Aws", "Deployment.Aws\Deployment.Aws.fsproj", "{5BE712B1-F56C-492C-B6BB-CB8E74C84057}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -149,6 +151,18 @@ Global
 		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Release|x64.Build.0 = Release|Any CPU
 		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Release|x86.ActiveCfg = Release|Any CPU
 		{5EBAE841-F1B2-48D8-8804-544D7B0E78F6}.Release|x86.Build.0 = Release|Any CPU
+		{5BE712B1-F56C-492C-B6BB-CB8E74C84057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE712B1-F56C-492C-B6BB-CB8E74C84057}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BE712B1-F56C-492C-B6BB-CB8E74C84057}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5BE712B1-F56C-492C-B6BB-CB8E74C84057}.Debug|x64.Build.0 = Debug|Any CPU
+		{5BE712B1-F56C-492C-B6BB-CB8E74C84057}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5BE712B1-F56C-492C-B6BB-CB8E74C84057}.Debug|x86.Build.0 = Debug|Any CPU
+		{5BE712B1-F56C-492C-B6BB-CB8E74C84057}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE712B1-F56C-492C-B6BB-CB8E74C84057}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BE712B1-F56C-492C-B6BB-CB8E74C84057}.Release|x64.ActiveCfg = Release|Any CPU
+		{5BE712B1-F56C-492C-B6BB-CB8E74C84057}.Release|x64.Build.0 = Release|Any CPU
+		{5BE712B1-F56C-492C-B6BB-CB8E74C84057}.Release|x86.ActiveCfg = Release|Any CPU
+		{5BE712B1-F56C-492C-B6BB-CB8E74C84057}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

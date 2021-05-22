@@ -1,0 +1,5 @@
+Pulumi.FSharp
+FSharp.Core
+Ply
+Pulumi.Random
+Pulumi.Aws

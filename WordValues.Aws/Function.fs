@@ -17,29 +17,41 @@ open WordValues
 [<assembly: LambdaSerializer(typeof<Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer>)>]
 ()
 
+module Dictionary =
+    let tryGet key (dict : System.Collections.Generic.IDictionary<_,_>) =
+        match dict.TryGetValue key with
+        | false, _ -> None
+        | true,  v -> Some v
+
 module Function =
 
-    let functionHandler (word : string) (context: ILambdaContext) =
-        if not (isNull word) then
+    let functionHandler (request : APIGatewayProxyRequest) =
+        let wordParam =
+            request.QueryStringParameters
+            |> Option.ofObj
+            |> Option.bind (Dictionary.tryGet "word")
+
+        match wordParam with
+        | Some word ->
             let result = Calculate.wordValue word
             let content = JsonSerializer.Serialize<_>(result, JsonSerializerOptions(IgnoreNullValues = true))
 
             APIGatewayProxyResponse(
                 StatusCode = int HttpStatusCode.OK,
-                Body       = content,
-                Headers    = dict [ ("Content-Type", "application/json") ]
+                Headers    = dict [ ("Content-Type", "application/json") ],
+                Body       = content
                 )
-        else
+        | None ->
             APIGatewayProxyResponse(
                 StatusCode = int HttpStatusCode.BadRequest,
-                Body       = "Required query parameter 'word' was missing",
-                Headers    = dict [ ("Content-Type", "text/plain;charset=utf-8") ]
+                Headers    = dict [ ("Content-Type", "text/plain;charset=utf-8") ],
+                Body       = "Required query parameter 'word' was missing"
                 )
 
     [<EntryPoint>]
     let main _args =
 
-        let handler = Func<string, ILambdaContext, APIGatewayProxyResponse>(functionHandler)
+        let handler = Func<APIGatewayProxyRequest, APIGatewayProxyResponse>(functionHandler)
         use handlerWrapper = HandlerWrapper.GetHandlerWrapper(handler, new DefaultLambdaJsonSerializer())
         use bootstrap = new LambdaBootstrap(handlerWrapper)
 
