@@ -29,6 +29,18 @@ type TestAzureFun (func : WordValuesAzureFuncInstance) =
         Assert.Equal("Required query parameter 'word' was missing", response |> Response.toText)
 
     [<Fact>]
+    member _.``WordValue with no 'word' query parameter returns an error`` () =
+        let connection = func.GetConnection()
+        let testUri = Uri(connection.BaseUri, "/api/WordValue?spoons=3")
+
+        let response =
+            get testUri.AbsoluteUri
+            |> Request.send
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.statusCode)
+        Assert.Equal("Required query parameter 'word' was missing", response |> Response.toText)
+
+    [<Fact>]
     member _.``WordValue returns the correct message`` () =
         let connection = func.GetConnection()
         let testUri = Uri(connection.BaseUri, "/api/WordValue?word=Hello")
