@@ -196,4 +196,6 @@ module File =
 ```
 Once all that is done, the gateway can be tested by opening the gateway from the list in the AWS Gateways page, select the "ANY" node and click the lightning bolt in the "TEST" column. Choose "GET" in the Method selector, enter `word=whatever` in the Query Strings box and click "Test".
 
+It then took quite a while to get past a problem where calling the published endpoint Url resulted in an Internal Server Error every time. It turned out that it was because I'd defined a `dev` stage, but the deployment referred to a `prod` stage.
+
 I also created a Test suite in the Deployment.Tests project to test the deployed Aws stack.
