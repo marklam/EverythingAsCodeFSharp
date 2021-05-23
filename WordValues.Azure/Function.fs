@@ -11,13 +11,14 @@ open Microsoft.Azure.Functions.Worker.Http
 open WordValues
 
 module NameValueCollection =
-    let tryFind (key : string) (nvc : NameValueCollection) =
+    let tryGet (key : string) (nvc : NameValueCollection) =
         nvc.[key] |> Option.ofObj
 
 [<Function("WordValue")>]
 let run ([<HttpTrigger(AuthorizationLevel.Anonymous, "get")>] request:HttpRequestData, executionContext:FunctionContext) : HttpResponseData =
-    let parameters = HttpUtility.ParseQueryString(request.Url.Query)
-    let wordParam = parameters |> NameValueCollection.tryFind "word"
+    let wordParam =
+        HttpUtility.ParseQueryString(request.Url.Query)
+        |> NameValueCollection.tryGet "word"
     match wordParam with
     | Some word ->
         let result = Calculate.wordValue word

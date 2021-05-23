@@ -1,37 +1,46 @@
 namespace WordValues.Aws.Tests
 
-open System
 open System.Net
 open System.Text.Json
 
 open Xunit
-open Amazon.Lambda.TestUtilities
 open WordValues.Aws
+open Amazon.Lambda.APIGatewayEvents
 
 module FunctionTest =
 
     [<Fact>]
     let ``WordValue with no query parameter returns an error`` () =
-        let context = TestLambdaContext()
-        let response = Function.functionHandler null context
+        let request = APIGatewayProxyRequest()
+
+        let response = Function.functionHandler request
+
+        Assert.Equal(int HttpStatusCode.BadRequest, response.StatusCode)
+        Assert.Equal("Required query parameter 'word' was missing", response.Body)
+
+    [<Fact>]
+    let ``WordValue with no 'word' query parameter returns an error`` () =
+        let request = APIGatewayProxyRequest(QueryStringParameters = dict["spoons", "3"])
+
+        let response = Function.functionHandler request
 
         Assert.Equal(int HttpStatusCode.BadRequest, response.StatusCode)
         Assert.Equal("Required query parameter 'word' was missing", response.Body)
 
     [<Fact>]
     let ``WordValue returns the correct message`` () =
-        let context = TestLambdaContext()
+        let request = APIGatewayProxyRequest(QueryStringParameters = dict["word", "Hello"])
 
-        let response = Function.functionHandler "Hello" context
+        let response = Function.functionHandler request
 
         Assert.Equal(int HttpStatusCode.OK, response.StatusCode)
         Assert.Equal("""{"Value":52}""", response.Body)
 
     [<Fact>]
     let ``WordValue returns warnings for non-letters`` () =
-        let context = TestLambdaContext()
+        let request = APIGatewayProxyRequest(QueryStringParameters = dict["word", "Hello 123"])
 
-        let response = Function.functionHandler "Hello 123" context
+        let response = Function.functionHandler request
 
         Assert.Equal(int HttpStatusCode.OK, response.StatusCode)
 

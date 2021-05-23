@@ -46,6 +46,125 @@ let infra () =
             )
         )
 
+    let devopsLambdaPolicy =
+        Iam.GroupPolicy (
+            "devopsLambdaPolicy",
+            Iam.GroupPolicyArgs (
+                Group = io devops.Id,
+                Policy = input
+                    """{
+                        "Version": "2012-10-17",
+                        "Statement": [{
+                            "Effect": "Allow",
+                            "Action": [
+                                "lambda:GetFunctionConfiguration",
+                                "lambda:UpdateFunctionConfiguration",
+                                "lambda:CreateFunction",
+                                "lambda:DeleteFunction",
+                                "lambda:GetPolicy"
+                            ],
+                            "Resource": "arn:aws:lambda:*:*:*"
+                        }]
+                    }"""
+            )
+        )
+
+    let devopsLambdaPolicy2 =
+        Iam.GroupPolicy (
+            "devopsLambdaPolicy2",
+            Iam.GroupPolicyArgs (
+                Group = io devops.Id,
+                Policy = input
+                    """{
+                        "Version": "2012-10-17",
+                        "Statement": [{
+                            "Effect": "Allow",
+                            "Action": [
+                                "lambda:InvokeFunction",
+                                "lambda:GetFunction",
+                                "lambda:UpdateFunctionCode",
+                                "lambda:ListVersionsByFunction",
+                                "lambda:GetFunctionCodeSigningConfig",
+                                "lambda:AddPermission",
+                                "lambda:RemovePermission"
+                            ],
+                            "Resource": "arn:aws:lambda:*:*:*:*"
+                        }]
+                    }"""
+            )
+        )
+
+    let devopsS3Policy =
+        Iam.GroupPolicy (
+            "devopsS3Policy",
+            Iam.GroupPolicyArgs (
+                Group = io devops.Id,
+                Policy = input
+                    """{
+                        "Version": "2012-10-17",
+                        "Statement": [{
+                            "Effect": "Allow",
+                            "Action": [
+                                "s3:*"
+                            ],
+                            "Resource": "*"
+                        }]
+                    }"""
+            )
+        )
+
+    let devopsIamPolicy =
+        Iam.GroupPolicy (
+            "devopsIamPolicy",
+            Iam.GroupPolicyArgs (
+                Group = io devops.Id,
+                Policy = input
+                    """{
+                        "Version": "2012-10-17",
+                        "Statement": [{
+                            "Effect": "Allow",
+                            "Action": [
+                                "iam:ListRoles",
+                                "iam:ListPolicies",
+                                "iam:GetRole",
+                                "iam:CreateRole",
+                                "iam:AttachRolePolicy",
+                                "iam:PassRole",
+                                "iam:ListRolePolicies",
+                                "iam:ListAttachedRolePolicies",
+                                "iam:GetUser",
+                                "iam:CreateServiceLinkedRole"
+                            ],
+                            "Resource": "arn:aws:iam::*:*"
+                        }]
+                    }"""
+            )
+        )
+
+    let devopsGatewayPolicy =
+        Iam.GroupPolicy (
+            "devopsGatewayPolicy",
+            Iam.GroupPolicyArgs (
+                Group = io devops.Id,
+                Policy = input
+                    """{
+                        "Version": "2012-10-17",
+                        "Statement": [{
+                            "Effect": "Allow",
+                            "Action": [
+                                "apigateway:GET",
+                                "apigateway:POST",
+                                "apigateway:PATCH",
+                                "apigateway:PUT",
+                                "apigateway:DELETE",
+                                "apigateway:UpdateRestApiPolicy"
+                            ],
+                            "Resource": "arn:aws:apigateway:*::*"
+                        }]
+                    }"""
+            )
+        )
+
     let deploy =
         Iam.User(
             "deploy",
