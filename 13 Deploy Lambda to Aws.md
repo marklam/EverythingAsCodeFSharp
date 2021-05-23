@@ -194,4 +194,6 @@ module File =
         let hash   = sha256.ComputeHash stream
         Convert.ToBase64String(hash)
 ```
+Once all that is done, the gateway can be tested by opening the gateway from the list in the AWS Gateways page, select the "ANY" node and click the lightning bolt in the "TEST" column. Choose "GET" in the Method selector, enter `word=whatever` in the Query Strings box and click "Test".
 
+I also created a Test suite in the Deployment.Tests project to test the deployed Aws stack.

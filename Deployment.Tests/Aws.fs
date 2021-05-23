@@ -39,7 +39,7 @@ type TestAzureFun (stack : AwsPulumiStackInstance) =
     member _.``WordValue returns the correct message`` () =
         let outputs = stack.GetOutputs()
         let baseUri = Uri(outputs.["endpoint"].Value :?> string, UriKind.Absolute)
-        let testUri = Uri(baseUri, "/api/WordValue?word=Hello")
+        let testUri = Uri(baseUri, "?word=Hello")
 
         let response =
             get testUri.AbsoluteUri
@@ -52,7 +52,7 @@ type TestAzureFun (stack : AwsPulumiStackInstance) =
     member _.``WordValue returns warnings for non-letters`` () =
         let outputs = stack.GetOutputs()
         let baseUri = Uri(outputs.["endpoint"].Value :?> string, UriKind.Absolute)
-        let testUri = Uri(baseUri, "/api/WordValue?word=" + Uri.encodeUrlParam "Hello 123")
+        let testUri = Uri(baseUri, "?word=" + Uri.encodeUrlParam "Hello 123")
 
         let response =
             get testUri.AbsoluteUri

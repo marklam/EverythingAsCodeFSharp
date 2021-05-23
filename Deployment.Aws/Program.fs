@@ -58,7 +58,7 @@ let infra () =
             "wordLambda",
             Lambda.FunctionArgs(
                 Runtime        = inputUnion2Of2 Lambda.Runtime.Custom,
-                Handler        = input "bootstrap::WordValues.Aws.Function::functionHandler",
+                Handler        = input "bootstrap::WordValues.Aws.Function::functionHandler", // TODO - remove name dependency
                 Role           = io lambdaRole.Arn,
                 S3Bucket       = io codeBlob.Bucket,
                 S3Key          = io codeBlob.Key,
@@ -159,9 +159,7 @@ let infra () =
             "wordDeployment",
             ApiGateway.DeploymentArgs(
                 Description      = input "WordValue API deployment",
-                RestApi          = io gateway.Id,
-                StageDescription = input "Production",
-                StageName        = input "prod"
+                RestApi          = io gateway.Id
             ),
             CustomResourceOptions(
                 DependsOn = InputList.ofSeq [ resource; method; integration ]
@@ -193,13 +191,13 @@ let infra () =
             )
         )
 
-    let invocationUrl =
-        gateway.Id
-        |> Output.map (fun gwId -> sprintf "https://%s.execute-api.%s.amazonaws.com/prod/{message}" gwId region)
+    let endpoint =
+        (gateway.Id, stage.StageName)
+        ||> Output.map2 (fun gwId stageName -> $"https://%s{gwId}.execute-api.%s{region}.amazonaws.com/%s{stageName}/wordvalue") // The last component is ingored
 
     dict [
-        "sourceHash",    lambda.SourceCodeHash :> obj
-        "invocationUrl", invocationUrl         :> obj
+        "sourceHash", lambda.SourceCodeHash :> obj
+        "endpoint",   endpoint              :> obj
     ]
 
 
