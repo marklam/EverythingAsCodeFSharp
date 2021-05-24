@@ -19,15 +19,15 @@ type [<AllowNullLiteral>] ContextBindingData =
     abstract invocationId: string option with get, set
     [<EmitIndexer>] abstract Item: name: string -> obj option with get, set
 
-/// The context object can be used for writing logs, reading data from bindings, setting outputs and using 
-/// the context.done callback when your exported function is synchronous. A context object is passed 
+/// The context object can be used for writing logs, reading data from bindings, setting outputs and using
+/// the context.done callback when your exported function is synchronous. A context object is passed
 /// to your function from the Azure Functions runtime on function invocation.
 type [<AllowNullLiteral>] Context =
     /// A unique GUID per function invocation.
     abstract invocationId: string with get, set
     /// Function execution metadata.
     abstract executionContext: ExecutionContext with get, set
-    /// Input and trigger binding data, as defined in function.json. Properties on this object are dynamically 
+    /// Input and trigger binding data, as defined in function.json. Properties on this object are dynamically
     /// generated and named based off of the "name" property in function.json.
     abstract bindings: ContextBindings with get, set
     /// Trigger metadata and function invocation data.
@@ -36,12 +36,12 @@ type [<AllowNullLiteral>] Context =
     abstract traceContext: TraceContext with get, set
     /// Bindings your function uses, as defined in function.json.
     abstract bindingDefinitions: ResizeArray<BindingDefinition> with get, set
-    /// Allows you to write streaming function logs. Calling directly allows you to write streaming function logs 
+    /// Allows you to write streaming function logs. Calling directly allows you to write streaming function logs
     /// at the default trace level.
     abstract log: Logger with get, set
     /// <summary>
     /// A callback function that signals to the runtime that your code has completed. If your function is synchronous,
-    /// you must call context.done at the end of execution. If your function is asynchronous, you should not use this 
+    /// you must call context.done at the end of execution. If your function is asynchronous, you should not use this
     /// callback.
     /// </summary>
     /// <param name="err">A user-defined error to pass back to the runtime. If present, your function execution will fail.</param>

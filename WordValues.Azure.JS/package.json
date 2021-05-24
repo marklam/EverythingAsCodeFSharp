@@ -1,0 +1,13 @@
+{
+  "name": "",
+  "version": "",
+  "description": "",
+  "scripts": {
+    "build": "parcel build Function.fs.js --out-dir WordValues --out-file index.js",
+    "test": "echo \"No tests yet...\""
+  },
+  "author": "",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
+}

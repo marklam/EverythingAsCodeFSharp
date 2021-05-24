@@ -4,8 +4,8 @@ open System
 open Fable.Core
 open Fable.Core.JS
 
-type HttpRequest = ___public_Interfaces.HttpRequest
-type HttpMethod = ___public_Interfaces.HttpMethod
+type HttpRequest = Interfaces.HttpRequest
+type HttpMethod = Interfaces.HttpMethod
 
 type [<AllowNullLiteral>] IExports =
     abstract RequestProperties: RequestPropertiesStatic

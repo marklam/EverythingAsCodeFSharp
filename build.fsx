@@ -5,6 +5,7 @@
     nuget Fake.Core.Target
     nuget Fake.IO.Zip
     nuget Fake.DotNet.Cli
+    nuget Fake.JavaScript.Yarn
     //"""
 #endif
 
@@ -15,6 +16,7 @@ open Fake.Core.TargetOperators
 open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
 open Fake.DotNet
+open Fake.JavaScript
 
 module Target =
     let create name description body =
@@ -61,6 +63,12 @@ let unitTests =
 let publishAzureFunc =
     Target.create "PublishAzureFunc" "Publish the Azure Function" (fun _ ->
         DotNet.publish publishOpt "WordValues.Azure"
+    )
+
+let publishAzureJsFunc =
+    Target.create "PublishAzureJSFunc" "Publish the Azure Function as Javascript" (fun _ ->
+        DotNet.exec dotNetOpt "fable" "WordValues.Azure.JS" |> ignore
+        Yarn.exec "build" (fun opt -> { opt with WorkingDirectory = solutionFolder </> "WordValues.Azure.JS" })
     )
 
 let publishAwsLambda =

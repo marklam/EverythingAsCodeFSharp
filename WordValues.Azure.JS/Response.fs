@@ -3,10 +3,11 @@ module rec Response
 open System
 open Fable.Core
 open Fable.Core.JS
+open Interfaces
 
 type Function = System.Action
 
-type Cookie = ___public_Interfaces.Cookie
+type Cookie = Interfaces.Cookie
 
 type [<AllowNullLiteral>] IExports =
     abstract Response: ResponseStatic
@@ -23,6 +24,7 @@ type [<AllowNullLiteral>] IResponse =
 
 type [<AllowNullLiteral>] Response =
     inherit IResponse
+    inherit ContextRes
     abstract statusCode: U2<string, float> option with get, set
     abstract headers: IResponseHeaders with get, set
     abstract cookies: ResizeArray<Cookie> with get, set

@@ -348,3 +348,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Fable output
+*.fs.js
+
+# Parcel output
+/WordValues.Azure.JS/WordValues/index.js*
