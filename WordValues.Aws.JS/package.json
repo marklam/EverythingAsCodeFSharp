@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "build": "parcel build Function.fs.js --out-dir WordValue --out-file index.js"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
+}

@@ -12,8 +12,6 @@ open Request
 
 open WordValues
 
-//let inline encoder<'T> = Encode.Auto.generateEncoderCached<'T>(skipNullField = true)
-
 let run (context : Context) (request : HttpRequest) =
     let wordParam = request.query.["word"]
 

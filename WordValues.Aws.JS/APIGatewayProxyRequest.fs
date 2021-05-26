@@ -1,21 +1,42 @@
-﻿namespace Amazon.Lambda.APIGatewayEvents
-{
-    using System;
-    using System.Collections.Generic;
+namespace Amazon.Lambda.APIGatewayEvents
+
+open Fable.Core
+
+module rec Request =
+    type [<AllowNullLiteral>] RequestHeaders =
+        [<EmitIndexer>] abstract Item: name: string -> string option with get, set
+
+    type [<AllowNullLiteral>] MultiValueHeaders =
+        [<EmitIndexer>] abstract Item: name: string -> string seq option with get, set
+
+    type [<AllowNullLiteral>] QueryStringParameters =
+        [<EmitIndexer>] abstract Item: name: string -> string option with get, set
+
+    type [<AllowNullLiteral>] MultiValueQueryStringParameters =
+        [<EmitIndexer>] abstract Item: name: string -> string seq option with get, set
+
+    type [<AllowNullLiteral>] PathParameters =
+        [<EmitIndexer>] abstract Item: name: string -> string option with get, set
+
+    type [<AllowNullLiteral>] StageVariables =
+        [<EmitIndexer>] abstract Item: name: string -> string option with get, set
+
+    type [<AllowNullLiteral>] APIGatewayCustomAuthorizerContext =
+        [<EmitIndexer>] abstract Item: name: string -> obj option with get, set
 
     /// <summary>
     /// For request coming in from API Gateway proxy
     /// http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-set-up-simple-proxy.html
     /// </summary>
-    public class APIGatewayProxyRequest
-    {
+    type APIGatewayProxyRequest =
+        {
         /// <summary>
         /// The resource path defined in API Gateway
         /// <para>
         /// This field is only set for REST API requests.
         /// </para>
         /// </summary>
-        public string Resource { get; set; }
+        resource : string option
 
         /// <summary>
         /// The url path for the caller
@@ -23,7 +44,7 @@
         /// This field is only set for REST API requests.
         /// </para>
         /// </summary>
-        public string Path { get; set; }
+        path : string option
 
         /// <summary>
         /// The HTTP method used
@@ -31,51 +52,51 @@
         /// This field is only set for REST API requests.
         /// </para>
         /// </summary>
-        public string HttpMethod { get; set; }
+        httpMethod : string option
 
         /// <summary>
-        /// The headers sent with the request. This collection will only contain a single value for a header. 
-        /// 
+        /// The headers sent with the request. This collection will only contain a single value for a header.
+        ///
         /// API Gateway will populate both the Headers and MultiValueHeaders collection for every request. If multiple values
         /// are set for a header then the Headers collection will just contain the last value.
         /// <para>
         /// This field is only set for REST API requests.
         /// </para>
         /// </summary>
-        public IDictionary<string, string> Headers { get; set; }
+        headers : RequestHeaders option
 
         /// <summary>
         /// The headers sent with the request. This collection supports multiple values for a single header.
-        /// 
+        ///
         /// API Gateway will populate both the Headers and MultiValueHeaders collection for every request. If multiple values
         /// are set for a header then the Headers collection will just contain the last value.
         /// <para>
         /// This field is only set for REST API requests.
         /// </para>
         /// </summary>
-        public IDictionary<string, IList<string>> MultiValueHeaders { get; set; }
+        multiValueHeaders : MultiValueHeaders option
 
         /// <summary>
         /// The query string parameters that were part of the request. This collection will only contain a single value for a query parameter.
-        /// 
+        ///
         /// API Gateway will populate both the QueryStringParameters and MultiValueQueryStringParameters collection for every request. If multiple values
         /// are set for a query parameter then the QueryStringParameters collection will just contain the last value.
         /// <para>
         /// This field is only set for REST API requests.
         /// </para>
         /// </summary>
-        public IDictionary<string, string> QueryStringParameters { get; set; }
+        queryStringParameters : QueryStringParameters option
 
         /// <summary>
         /// The query string parameters that were part of the request. This collection supports multiple values for a single query parameter.
-        /// 
+        ///
         /// API Gateway will populate both the QueryStringParameters and MultiValueQueryStringParameters collection for every request. If multiple values
         /// are set for a query parameter then the QueryStringParameters collection will just contain the last value.
         /// <para>
         /// This field is only set for REST API requests.
         /// </para>
         /// </summary>
-        public IDictionary<string, IList<string>> MultiValueQueryStringParameters { get; set; }
+        multiValueQueryStringParameters : MultiValueQueryStringParameters option
 
         /// <summary>
         /// The path parameters that were part of the request
@@ -83,67 +104,67 @@
         /// This field is only set for REST API requests.
         /// </para>
         /// </summary>
-        public IDictionary<string, string> PathParameters { get; set; }
+        pathParameters : PathParameters option
 
         /// <summary>
         /// The stage variables defined for the stage in API Gateway
         /// </summary>
-        public IDictionary<string, string> StageVariables { get; set; }
+        stageVariables : StageVariables option
 
         /// <summary>
         /// The request context for the request
         /// </summary>
-        public ProxyRequestContext RequestContext { get; set; }
+        requestContext : ProxyRequestContext option
 
         /// <summary>
         /// The HTTP request body.
         /// </summary>
-        public string Body { get; set; }
+        body : string option
 
         /// <summary>
         /// True if the body of the request is base 64 encoded.
         /// </summary>
-        public bool IsBase64Encoded { get; set; }
-
+        isBase64Encoded : bool option
+        }
         /// <summary>
-        /// The ProxyRequestContext contains the information to identify the AWS account and resources invoking the 
+        /// The ProxyRequestContext contains the information to identify the AWS account and resources invoking the
         /// Lambda function. It also includes Cognito identity information for the caller.
         /// </summary>
-        public class ProxyRequestContext
-        {
+        type ProxyRequestContext =
+            {
             /// <summary>
             /// The resource full path including the API Gateway stage
             /// <para>
             /// This field is only set for REST API requests.
             /// </para>
             /// </summary>
-            public string Path { get; set; }
+            path : string option
 
             /// <summary>
             /// The account id that owns the executing Lambda function
             /// </summary>
-            public string AccountId { get; set; }
+            accountId : string option
 
             /// <summary>
             /// The resource id.
             /// </summary>
-            public string ResourceId { get; set; }
+            resourceId : string option
 
 
             /// <summary>
             /// The API Gateway stage name
             /// </summary>
-            public string Stage { get; set; }
+            stage : string option
 
             /// <summary>
             /// The unique request id
             /// </summary>
-            public string RequestId { get; set; }
+            requestId : string option
 
             /// <summary>
             /// The identity information for the request caller
             /// </summary>
-            public RequestIdentity Identity { get; set; }
+            identity : RequestIdentity option
 
             /// <summary>
             /// The resource path defined in API Gateway
@@ -151,7 +172,7 @@
             /// This field is only set for REST API requests.
             /// </para>
             /// </summary>
-            public string ResourcePath { get; set; }
+            resourcePath : string option
 
             /// <summary>
             /// The HTTP method used
@@ -159,17 +180,17 @@
             /// This field is only set for REST API requests.
             /// </para>
             /// </summary>
-            public string HttpMethod { get; set; }
+            httpMethod : string option
 
             /// <summary>
             /// The API Gateway rest API Id.
             /// </summary>
-            public string ApiId { get; set; }
+            apiId : string option
 
             /// <summary>
             /// An automatically generated ID for the API call, which contains more useful information for debugging/troubleshooting.
             /// </summary>
-            public string ExtendedRequestId { get; set; }
+            extendedRequestId : string option
 
             /// <summary>
             /// The connectionId identifies a unique client connection in a WebSocket API.
@@ -177,7 +198,7 @@
             /// This field is only set for WebSocket API requests.
             /// </para>
             /// </summary>
-            public string ConnectionId { get; set; }
+            connectionId : string option
 
             /// <summary>
             /// The Epoch-formatted connection time in a WebSocket API.
@@ -185,7 +206,7 @@
             /// This field is only set for WebSocket API requests.
             /// </para>
             /// </summary>
-            public long ConnectionAt { get; set; }
+            connectionAt : int64 option
 
             /// <summary>
             /// A domain name for the WebSocket API. This can be used to make a callback to the client (instead of a hard-coded value).
@@ -193,12 +214,12 @@
             /// This field is only set for WebSocket API requests.
             /// </para>
             /// </summary>
-            public string DomainName { get; set; }
+            domainName : string option
 
             /// <summary>
             /// The first label of the DomainName. This is often used as a caller/customer identifier.
             /// </summary>
-            public string DomainPrefix { get; set; }
+            domainPrefix : string option
 
             /// <summary>
             /// The event type: CONNECT, MESSAGE, or DISCONNECT.
@@ -206,7 +227,7 @@
             /// This field is only set for WebSocket API requests.
             /// </para>
             /// </summary>
-            public string EventType { get; set; }
+            eventType : string option
 
             /// <summary>
             /// A unique server-side ID for a message. Available only when the $context.eventType is MESSAGE.
@@ -214,7 +235,7 @@
             /// This field is only set for WebSocket API requests.
             /// </para>
             /// </summary>
-            public string MessageId { get; set; }
+            messageId : string option
 
             /// <summary>
             /// The selected route key.
@@ -222,184 +243,182 @@
             /// This field is only set for WebSocket API requests.
             /// </para>
             /// </summary>
-            public string RouteKey { get; set; }
+            routeKey : string option
 
 
             /// <summary>
             /// The APIGatewayCustomAuthorizerContext containing the custom properties set by a custom authorizer.
             /// </summary>
-            public APIGatewayCustomAuthorizerContext Authorizer { get; set; }
-            
+            authorizer : APIGatewayCustomAuthorizerContext option
+
             /// <summary>
             /// Gets and sets the operation name.
             /// </summary>
-            public string OperationName { get; set; }
-            
+            operationName : string option
+
             /// <summary>
             /// Gets and sets the error.
             /// </summary>
-            public string Error { get; set; }
-            
+            error : string option
+
             /// <summary>
             /// Gets and sets the integration latency.
             /// </summary>
-            public string IntegrationLatency { get; set; }
-            
+            integrationLatency : string option
+
             /// <summary>
             /// Gets and sets the message direction.
             /// </summary>
-            public string MessageDirection { get; set; }
-            
+            messageDirection : string option
+
             /// <summary>
             /// Gets and sets the request time.
             /// </summary>
-            public string RequestTime { get; set; }
-            
+            requestTime : string option
+
             /// <summary>
             /// Gets and sets the request time as an epoch.
             /// </summary>
-            public long RequestTimeEpoch { get; set; }
-            
+            requestTimeEpoch : int64 option
+
             /// <summary>
             /// Gets and sets the status.
             /// </summary>
-            public string Status { get; set; }
+            status : string option
 
         }
 
         /// <summary>
         /// The RequestIdentity contains identity information for the request caller.
         /// </summary>
-        public class RequestIdentity
-        {
+        type RequestIdentity =
+            {
 
             /// <summary>
             /// The Cognito identity pool id.
             /// </summary>
-            public string CognitoIdentityPoolId { get; set; }
+            cognitoIdentityPoolId : string option
 
             /// <summary>
             /// The account id of the caller.
             /// </summary>
-            public string AccountId { get; set; }
+            accountId : string option
 
             /// <summary>
             /// The cognito identity id.
             /// </summary>
-            public string CognitoIdentityId { get; set; }
+            cognitoIdentityId : string option
 
             /// <summary>
             /// The caller
             /// </summary>
-            public string Caller { get; set; }
+            caller : string option
 
             /// <summary>
             /// The API Key
             /// </summary>
-            public string ApiKey { get; set; }
+            apiKey : string option
 
             /// <summary>
             /// The API Key ID
             /// </summary>
-            public string ApiKeyId { get; set; }
-            
+            apiKeyId : string option
+
             /// <summary>
             /// The Access Key
             /// </summary>
-            public string AccessKey { get; set; }
+            accessKey : string option
 
             /// <summary>
             /// The source IP of the request
             /// </summary>
-            public string SourceIp { get; set; }
+            sourceIp : string option
 
             /// <summary>
             /// The Cognito authentication type used for authentication
             /// </summary>
-            public string CognitoAuthenticationType { get; set; }
+            cognitoAuthenticationType : string option
 
             /// <summary>
             /// The Cognito authentication provider
             /// </summary>
-            public string CognitoAuthenticationProvider { get; set; }
+            cognitoAuthenticationProvider : string option
 
             /// <summary>
             /// The user arn
             /// </summary>
-            public string UserArn { get; set; }
+            userArn : string option
 
             /// <summary>
             /// The user agent
             /// </summary>
-            public string UserAgent { get; set; }
+            userAgent : string option
 
             /// <summary>
             /// The user
             /// </summary>
-            public string User { get; set; }
+            user : string option
 
 
             /// <summary>
             /// Properties for a client certificate.
             /// </summary>
-            public ProxyRequestClientCert ClientCert { get; set; }
+            clientCert : ProxyRequestClientCert option
         }
 
         /// <summary>
         /// Container for the properties of the client certificate.
         /// </summary>
-        public class ProxyRequestClientCert
-        {
+        type ProxyRequestClientCert =
+            {
             /// <summary>
-            /// The PEM-encoded client certificate that the client presented during mutual TLS authentication. 
-            /// Present when a client accesses an API by using a custom domain name that has mutual 
+            /// The PEM-encoded client certificate that the client presented during mutual TLS authentication.
+            /// Present when a client accesses an API by using a custom domain name that has mutual
             /// TLS enabled. Present only in access logs if mutual TLS authentication fails.
             /// </summary>
-            public string ClientCertPem { get; set; }
+            clientCertPem : string option
 
             /// <summary>
-            /// The distinguished name of the subject of the certificate that a client presents. 
-            /// Present when a client accesses an API by using a custom domain name that has 
+            /// The distinguished name of the subject of the certificate that a client presents.
+            /// Present when a client accesses an API by using a custom domain name that has
             /// mutual TLS enabled. Present only in access logs if mutual TLS authentication fails.
             /// </summary>
-            public string SubjectDN { get; set; }
+            subjectDN : string option
 
             /// <summary>
-            /// The distinguished name of the issuer of the certificate that a client presents. 
-            /// Present when a client accesses an API by using a custom domain name that has 
+            /// The distinguished name of the issuer of the certificate that a client presents.
+            /// Present when a client accesses an API by using a custom domain name that has
             /// mutual TLS enabled. Present only in access logs if mutual TLS authentication fails.
             /// </summary>
-            public string IssuerDN { get; set; }
+            issuerDN : string option
 
             /// <summary>
-            /// The serial number of the certificate. Present when a client accesses an API by 
-            /// using a custom domain name that has mutual TLS enabled. 
+            /// The serial number of the certificate. Present when a client accesses an API by
+            /// using a custom domain name that has mutual TLS enabled.
             /// Present only in access logs if mutual TLS authentication fails.
             /// </summary>
-            public string SerialNumber { get; set; }
+            serialNumber : string option
 
             /// <summary>
             /// The rules for when the client cert is valid.
             /// </summary>
-            public ClientCertValidity Validity { get; set; }
+            validity : ClientCertValidity option
         }
 
         /// <summary>
         /// Container for the validation properties of a client cert.
         /// </summary>
-        public class ClientCertValidity
-        {
+        type ClientCertValidity =
+            {
             /// <summary>
-            /// The date before which the certificate is invalid. Present when a client accesses an API by using a custom domain name 
+            /// The date before which the certificate is invalid. Present when a client accesses an API by using a custom domain name
             /// that has mutual TLS enabled. Present only in access logs if mutual TLS authentication fails.
             /// </summary>
-            public string NotBefore { get; set; }
+            notBefore : string option
 
             /// <summary>
-            /// The date after which the certificate is invalid. Present when a client accesses an API by using a custom domain name that 
+            /// The date after which the certificate is invalid. Present when a client accesses an API by using a custom domain name that
             /// has mutual TLS enabled. Present only in access logs if mutual TLS authentication fails.
             /// </summary>
-            public string NotAfter { get; set; }
+            notAfter : string option
         }
-    }
-}

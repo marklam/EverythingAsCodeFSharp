@@ -354,6 +354,8 @@ MigrationBackup/
 
 # Parcel output
 /WordValues.Azure.JS/WordValue/index.js*
+/WordValues.Aws.JS/WordValue/index.js*
 
 # Deployment files
 */publish.zip
+

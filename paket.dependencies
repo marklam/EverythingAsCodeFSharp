@@ -9,6 +9,7 @@ nuget Amazon.Lambda.Serialization.SystemTextJson
 nuget Amazon.Lambda.TestUtilities
 nuget coverlet.collector
 nuget Fable.Core
+nuget Fable.Promise
 nuget FsCheck.Xunit
 nuget FSharp.Core
 nuget Microsoft.Azure.Functions.Worker

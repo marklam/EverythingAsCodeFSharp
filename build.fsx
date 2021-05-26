@@ -85,6 +85,17 @@ let publishAwsLambda =
         Fake.IO.Zip.createZip publishFolder publishZip "" Fake.IO.Zip.DefaultZipLevel false ( !! (publishFolder</>"**/*.*"))
     )
 
+let publishAwsJSLambda =
+    Target.create "PublishAwsJSLambda" "Publish the Aws Lambda as Javascript" (fun _ ->
+        let projectFolder = solutionFolder </> "WordValues.Aws.JS"
+        DotNet.exec dotNetOpt "fable" "WordValues.Aws.JS" |> ignore
+        Yarn.exec "build" (fun opt -> { opt with WorkingDirectory = projectFolder })
+        let publishZip = System.IO.Path.Combine(projectFolder, "publish.zip")
+        let zipFiles =
+            !! (projectFolder </> "WordValue/**/*.*")
+        Fake.IO.Zip.createZip (projectFolder</>"WordValue") publishZip "" Fake.IO.Zip.DefaultZipLevel false zipFiles
+    )
+
 let localTestAzureFunc =
     Target.create "LocalTestAzureFunc" "Test the Azure Function locally" (fun _ ->
         DotNet.test testOpt "WordValues.Azure.Tests"
@@ -112,6 +123,7 @@ build ==> unitTests
 build ==> publishAzureFunc   ==> localTestAzureFunc
 build ==> publishAzureJSFunc ==> localTestAzureJSFunc
 build ==> publishAwsLambda
+build ==> publishAwsJSLambda
 
 pulumiDeploy ==> deployedTestAzureFunc
 
