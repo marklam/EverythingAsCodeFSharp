@@ -4,7 +4,7 @@ open System
 open System.Net
 open Fable.Core
 open Fable.Core.JsInterop
-open Thoth.Json.Net
+open Thoth.Json
 
 open Interfaces
 open Response
