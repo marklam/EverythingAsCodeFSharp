@@ -24,6 +24,7 @@ nuget Pulumi.Github
 nuget Pulumi.Random
 nuget SchlenkR.FsHttp
 nuget Thoth.Json
+nuget Thoth.Json.Net
 nuget Unquote
 nuget xunit
 nuget xunit.runner.visualstudio

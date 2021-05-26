@@ -1,7 +1,6 @@
-﻿namespace Deployment.Tests.Azure
+﻿namespace Deployment.Tests.AzureJS
 
 open System
-open System.IO
 open System.Net
 open System.Text.Json
 
@@ -10,23 +9,16 @@ open FsHttp.Dsl
 
 open Xunit
 
-open Deployment.Tests
-
-module Deployment =
-    let folder = Path.Combine(DirectoryInfo(__SOURCE_DIRECTORY__).Parent.FullName, "Deployment")
-    let envVars = dict [ "PULUMI_CONFIG_PASSPHRASE", "My secure passphrase" ]
-
-type AzurePulumiStackInstance() =
-    inherit PulumiStack("dev", Deployment.folder, Deployment.envVars)
+open Deployment.Tests.Azure
 
 // TODO - category for slow tests that require cloud function
-type TestAzureFun (stack : AzurePulumiStackInstance) =
+type TestAzureJSFun (stack : AzurePulumiStackInstance) =
     interface IClassFixture<AzurePulumiStackInstance>
 
     [<Fact>]
     member _.``WordValue with no query parameter returns an error`` () =
         let outputs = stack.GetOutputs()
-        let testUri = Uri(outputs.["endpoint"].Value :?> string, UriKind.Absolute)
+        let testUri = Uri(outputs.["jsEndpoint"].Value :?> string, UriKind.Absolute)
 
         let response =
             get testUri.AbsoluteUri
@@ -38,7 +30,7 @@ type TestAzureFun (stack : AzurePulumiStackInstance) =
     [<Fact>]
     member _.``WordValue returns the correct message`` () =
         let outputs = stack.GetOutputs()
-        let baseUri = Uri(outputs.["endpoint"].Value :?> string, UriKind.Absolute)
+        let baseUri = Uri(outputs.["jsEndpoint"].Value :?> string, UriKind.Absolute)
         let testUri = Uri(baseUri, "/api/WordValue?word=Hello")
 
         let response =
@@ -51,7 +43,7 @@ type TestAzureFun (stack : AzurePulumiStackInstance) =
     [<Fact>]
     member _.``WordValue returns warnings for non-letters`` () =
         let outputs = stack.GetOutputs()
-        let baseUri = Uri(outputs.["endpoint"].Value :?> string, UriKind.Absolute)
+        let baseUri = Uri(outputs.["jsEndpoint"].Value :?> string, UriKind.Absolute)
         let testUri = Uri(baseUri, "/api/WordValue?word=" + Uri.encodeUrlParam "Hello 123")
 
         let response =

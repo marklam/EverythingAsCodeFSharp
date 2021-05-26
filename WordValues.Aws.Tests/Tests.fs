@@ -46,4 +46,4 @@ module FunctionTest =
 
         let result = response.Body |> JsonDocument.Parse
         Assert.Equal(52, result.RootElement.GetProperty("Value").GetInt32())
-        Assert.Equal("Ignored ' ','1','2','3'", result.RootElement.GetProperty("Warning").GetProperty("Value").GetString())
+        Assert.Equal("Ignored ' ','1','2','3'", result.RootElement.GetProperty("Warning").GetString())

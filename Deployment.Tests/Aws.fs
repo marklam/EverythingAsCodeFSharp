@@ -20,7 +20,7 @@ type AwsPulumiStackInstance() =
     inherit PulumiStack("dev", Deployment.folder, Deployment.envVars)
 
 // TODO - category for slow tests that require cloud function
-type TestAzureFun (stack : AwsPulumiStackInstance) =
+type TestAwsLambda (stack : AwsPulumiStackInstance) =
     interface IClassFixture<AwsPulumiStackInstance>
 
     [<Fact>]
@@ -62,4 +62,4 @@ type TestAzureFun (stack : AwsPulumiStackInstance) =
 
         let result = response |> Response.toText |> JsonDocument.Parse
         Assert.Equal(52, result.RootElement.GetProperty("Value").GetInt32())
-        Assert.Equal("Ignored ' ','1','2','3'", result.RootElement.GetProperty("Warning").GetProperty("Value").GetString())
+        Assert.Equal("Ignored ' ','1','2','3'", result.RootElement.GetProperty("Warning").GetString())

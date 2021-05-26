@@ -9,6 +9,7 @@
     <None Include="paket.references" />
     <Compile Include="PulumiStack.fs" />
     <Compile Include="Tests.fs" />
+    <Compile Include="AzureJS.fs" />
     <Compile Include="Aws.fs" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
