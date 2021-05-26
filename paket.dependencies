@@ -8,6 +8,7 @@ nuget Amazon.Lambda.RuntimeSupport
 nuget Amazon.Lambda.Serialization.SystemTextJson
 nuget Amazon.Lambda.TestUtilities
 nuget coverlet.collector
+nuget Fable.Core
 nuget FsCheck.Xunit
 nuget FSharp.Core
 nuget Microsoft.Azure.Functions.Worker
@@ -22,6 +23,8 @@ nuget Pulumi.FSharp
 nuget Pulumi.Github
 nuget Pulumi.Random
 nuget SchlenkR.FsHttp
+nuget Thoth.Json
+nuget Thoth.Json.Net
 nuget Unquote
 nuget xunit
 nuget xunit.runner.visualstudio

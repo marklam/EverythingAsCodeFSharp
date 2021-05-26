@@ -2,7 +2,7 @@ namespace WordValues.Aws
 
 open System
 open System.Net
-open System.Text.Json
+open Thoth.Json.Net
 
 open Amazon.Lambda.Core
 open Amazon.Lambda.RuntimeSupport
@@ -34,7 +34,7 @@ module Function =
         match wordParam with
         | Some word ->
             let result = Calculate.wordValue word
-            let content = JsonSerializer.Serialize<_>(result, JsonSerializerOptions(IgnoreNullValues = true))
+            let content = result |> WordValue.Encoder |> Encode.toString 0
 
             APIGatewayProxyResponse(
                 StatusCode = int HttpStatusCode.OK,

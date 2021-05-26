@@ -13,9 +13,13 @@ open Pulumi.AzureNative.Insights
 open PulumiExtras.Core
 open PulumiExtras.Azure
 
+let parentFolder = DirectoryInfo(__SOURCE_DIRECTORY__).Parent.FullName
+
 let publishFolder =
-    let parentFolder = DirectoryInfo(__SOURCE_DIRECTORY__).Parent.FullName
     Path.Combine(parentFolder, "WordValues.Azure", "bin", "Release", "net5.0", "publish")
+
+let publishJSZip =
+    Path.Combine(parentFolder, "WordValues.Azure.JS", "publish.zip")
 
 let infra () =
     let resourceGroup = ResourceGroup("functions-rg")
@@ -69,6 +73,20 @@ let infra () =
 
     let codeBlobUrl = signedBlobReadUrl blob container storageAccount resourceGroup
 
+    let jsBlob =
+        Blob(
+            "jszip",
+            BlobArgs(
+                AccountName       = io storageAccount.Name,
+                ContainerName     = io container.Name,
+                ResourceGroupName = io resourceGroup.Name,
+                Type              = input BlobType.Block,
+                Source            = input (FileArchive publishJSZip :> AssetOrArchive)
+            )
+        )
+
+    let jsCodeBlobUrl = signedBlobReadUrl jsBlob container storageAccount resourceGroup
+
     let appInsights =
         Component(
             "appInsights",
@@ -78,6 +96,7 @@ let infra () =
                 ResourceGroupName = io resourceGroup.Name
             )
         )
+
     let app =
         let appName = Random.decorate "app"
 
@@ -107,12 +126,45 @@ let infra () =
             )
         )
 
-    let endpoint = Output.format $"https://{app.DefaultHostName}/api/WordValue" // TODO - remove hardcoded 'api' and 'WordValue'
+    let jsApp =
+        let appName = Random.decorate "jsapp"
+
+        let siteConfig =
+            Inputs.SiteConfigArgs(
+                AppSettings =
+                    InputList.ofNamedInputValues [
+                        ("APPINSIGHTS_INSTRUMENTATIONKEY",           io appInsights.InstrumentationKey)
+                        ("AzureWebJobsStorage",                      io storageConnection)
+                        ("FUNCTIONS_EXTENSION_VERSION",              input "~3")
+                        ("FUNCTIONS_WORKER_RUNTIME",                 input "node")
+                        ("WEBSITE_CONTENTAZUREFILECONNECTIONSTRING", io storageConnection)
+                        ("WEBSITE_CONTENTSHARE",                     io appName)
+                        ("WEBSITE_RUN_FROM_PACKAGE",                 io jsCodeBlobUrl)
+                        ("WEBSITE_NODE_DEFAULT_VERSION",             input "~14")
+                    ],
+                Http20Enabled = input true,
+                NodeVersion   = input "~14"
+            )
+
+        WebApp(
+            "jsapp",
+            WebAppArgs(
+                Name              = io appName,
+                Kind              = input "FunctionApp",
+                ResourceGroupName = io resourceGroup.Name,
+                ServerFarmId      = io appServicePlan.Id,
+                SiteConfig        = input siteConfig
+            )
+        )
+
+    let endpoint   = Output.format $"https://{app.DefaultHostName}/api/WordValue" // TODO - remove hardcoded 'api' and 'WordValue'
+    let jsEndpoint = Output.format $"https://{jsApp.DefaultHostName}/api/WordValue" // TODO - remove hardcoded 'api' and 'WordValue'
 
     dict [
         "resouceGroup",   resourceGroup.Name  :> obj
         "storageAccount", storageAccount.Name :> obj
         "endpoint",       endpoint            :> obj
+        "jsEndpoint",     jsEndpoint          :> obj
     ]
 
 

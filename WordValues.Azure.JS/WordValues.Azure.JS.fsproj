@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="paket.references" />
+    <Compile Include="Interfaces.fs" />
+    <Compile Include="Request.fs" />
+    <Compile Include="Response.fs" />
+    <Compile Include="Function.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WordValues\WordValues.fsproj" />
+  </ItemGroup>
+  <Import Project="..\.paket\Paket.Restore.targets" />
+</Project>

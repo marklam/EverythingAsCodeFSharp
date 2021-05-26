@@ -3,7 +3,7 @@ module WordValues.Azure.Function
 open System.Net
 open System.Web
 open System.Collections.Specialized
-open System.Text.Json
+open Thoth.Json.Net
 
 open Microsoft.Azure.Functions.Worker
 open Microsoft.Azure.Functions.Worker.Http
@@ -22,7 +22,7 @@ let run ([<HttpTrigger(AuthorizationLevel.Anonymous, "get")>] request:HttpReques
     match wordParam with
     | Some word ->
         let result = Calculate.wordValue word
-        let content = JsonSerializer.Serialize<_>(result, JsonSerializerOptions(IgnoreNullValues = true))
+        let content = result |> WordValue.Encoder |> Encode.toString 0
 
         let response = request.CreateResponse(HttpStatusCode.OK)
         response.Headers.Add("Content-Type", "application/json")

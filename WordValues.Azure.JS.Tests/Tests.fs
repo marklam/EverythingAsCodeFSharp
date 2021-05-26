@@ -1,6 +1,7 @@
-namespace WordValues.Azure.Tests
+namespace WordValues.Azure.JS.Tests
 
 open System
+open System.IO
 open System.Text.Json
 open System.Net
 
@@ -9,10 +10,14 @@ open FsHttp.Dsl
 
 open Xunit
 
-type WordValuesAzureFuncInstance() =
-    inherit AzureFuncInstance(typeof<WordValuesAzureFuncInstance>, <@ WordValues.Azure.Program.main @>, 7071)
+open WordValues.Azure.Tests
 
-// TODO - category for slow tests that require func.exe
+module WordValuesAzureJSFunc =
+    let folder = Path.Combine(DirectoryInfo(__SOURCE_DIRECTORY__).Parent.FullName, "WordValues.Azure.JS")
+
+type WordValuesAzureFuncInstance() =
+    inherit AzureFuncInstance(WordValuesAzureJSFunc.folder, 7072)
+
 type TestAzureFun (func : WordValuesAzureFuncInstance) =
     interface IClassFixture<WordValuesAzureFuncInstance>
 

@@ -1,16 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IsPackable>false</IsPackable>
     <OutputType>Library</OutputType>
   </PropertyGroup>
   <ItemGroup>
     <None Include="paket.references" />
-    <Compile Include="PulumiStack.fs" />
+    <Compile Include="AzureFunc.fs" />
     <Compile Include="Tests.fs" />
-    <Compile Include="AzureJS.fs" />
-    <Compile Include="Aws.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WordValues.Azure.JS\WordValues.Azure.JS.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
