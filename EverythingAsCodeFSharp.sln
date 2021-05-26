@@ -33,6 +33,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		10 Build with Fake.md = 10 Build with Fake.md
 		11 Create an AWS Lambda.md = 11 Create an AWS Lambda.md
 		12 Configure the AWS account.md = 12 Configure the AWS account.md
+		13 Deploy Lambda to Aws.md = 13 Deploy Lambda to Aws.md
+		14 Search CloudTrail logs.md = 14 Search CloudTrail logs.md
+		15 Azure Javascipt Function.md = 15 Azure Javascipt Function.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AFF34F9C-C317-453C-9F0F-EBF2930C1963}"
@@ -46,6 +49,8 @@ EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Deployment.Aws", "Deployment.Aws\Deployment.Aws.fsproj", "{5BE712B1-F56C-492C-B6BB-CB8E74C84057}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "WordValues.Azure.JS", "WordValues.Azure.JS\WordValues.Azure.JS.fsproj", "{0A63C5A7-A23E-4101-9B79-5F44971E5034}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "WordValues.Azure.JS.Tests", "WordValues.Azure.JS.Tests\WordValues.Azure.JS.Tests.fsproj", "{2FF4AE05-7327-432C-818C-87FD919E14D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -177,6 +182,18 @@ Global
 		{0A63C5A7-A23E-4101-9B79-5F44971E5034}.Release|x64.Build.0 = Release|Any CPU
 		{0A63C5A7-A23E-4101-9B79-5F44971E5034}.Release|x86.ActiveCfg = Release|Any CPU
 		{0A63C5A7-A23E-4101-9B79-5F44971E5034}.Release|x86.Build.0 = Release|Any CPU
+		{2FF4AE05-7327-432C-818C-87FD919E14D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FF4AE05-7327-432C-818C-87FD919E14D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FF4AE05-7327-432C-818C-87FD919E14D2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2FF4AE05-7327-432C-818C-87FD919E14D2}.Debug|x64.Build.0 = Debug|Any CPU
+		{2FF4AE05-7327-432C-818C-87FD919E14D2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2FF4AE05-7327-432C-818C-87FD919E14D2}.Debug|x86.Build.0 = Debug|Any CPU
+		{2FF4AE05-7327-432C-818C-87FD919E14D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FF4AE05-7327-432C-818C-87FD919E14D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FF4AE05-7327-432C-818C-87FD919E14D2}.Release|x64.ActiveCfg = Release|Any CPU
+		{2FF4AE05-7327-432C-818C-87FD919E14D2}.Release|x64.Build.0 = Release|Any CPU
+		{2FF4AE05-7327-432C-818C-87FD919E14D2}.Release|x86.ActiveCfg = Release|Any CPU
+		{2FF4AE05-7327-432C-818C-87FD919E14D2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
