@@ -106,26 +106,41 @@ let localTestAzureJSFunc =
         DotNet.test testOpt "WordValues.Azure.JS.Tests"
     )
 
-let pulumiDeploy =
-    Target.create "PulumiDeploy" "Test the Azure Function locally" (fun _ ->
+let pulumiDeployAzure =
+    Target.create "PulumiDeployAzure" "Deploy to Azure" (fun _ ->
         runExe
             "pulumi"
-            (solutionFolder</>"Deployment")
+            (solutionFolder</>"Deployment.Azure")
             [ "up"; "-y"; "-s"; "dev" ]
     )
 
-let deployedTestAzureFunc =
-    Target.create "DeployedTestAzureFunc" "Test the Azure Function after deployment" (fun _ ->
+let pulumiDeployAws =
+    Target.create "PulumiDeployAws" "Deploy to Aws" (fun _ ->
+        runExe
+            "pulumi"
+            (solutionFolder</>"Deployment.Azure")
+            [ "up"; "-y"; "-s"; "dev" ]
+    )
+
+let deployedTest =
+    Target.create "DeployedTest" "Test the deployment" (fun _ ->
         DotNet.test testOpt "Deployment.Tests"
     )
 
 build ==> unitTests
-build ==> publishAzureFunc   ==> localTestAzureFunc
-build ==> publishAzureJSFunc ==> localTestAzureJSFunc
+build ==> publishAzureFunc
+build ==> publishAzureJSFunc
 build ==> publishAwsLambda
 build ==> publishAwsJSLambda
 
-pulumiDeploy ==> deployedTestAzureFunc
+publishAzureFunc   ==> localTestAzureFunc
+publishAzureJSFunc ==> localTestAzureJSFunc
+
+publishAzureFunc   ==> pulumiDeployAzure
+publishAzureJSFunc ==> pulumiDeployAzure
+
+publishAwsLambda   ==> pulumiDeployAws
+publishAwsJSLambda ==> pulumiDeployAws
 
 // Default target
 Target.runOrDefault build
