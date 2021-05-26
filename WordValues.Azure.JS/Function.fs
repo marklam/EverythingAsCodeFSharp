@@ -4,7 +4,7 @@ open System
 open System.Net
 open Fable.Core
 open Fable.Core.JsInterop
-open Thoth.Json
+open Thoth.Json.Net
 
 open Interfaces
 open Response
@@ -12,9 +12,9 @@ open Request
 
 open WordValues
 
-let inline encoder<'T> = Encode.Auto.generateEncoderCached<'T>(skipNullField = true)
+//let inline encoder<'T> = Encode.Auto.generateEncoderCached<'T>(skipNullField = true)
 
-let private run (context : Context) (request : HttpRequest) =
+let run (context : Context) (request : HttpRequest) =
     let wordParam = request.query.["word"]
 
     let response = createEmpty<Response>
@@ -23,7 +23,8 @@ let private run (context : Context) (request : HttpRequest) =
     match wordParam with
     | Some word ->
         let result = Calculate.wordValue word
-        let content = encoder result |> Encode.toString 4
+        let content = result |> WordValue.Encoder |> Encode.toString 0
+
         response.statusCode <- (HttpStatusCode.OK |> float |> U2<string, float>.op_ErasedCast |> Some)
         response.headers.["Content-Type"] <- ("application/json" :> obj |> Some)
         response.body <- (content :> obj |> Some)

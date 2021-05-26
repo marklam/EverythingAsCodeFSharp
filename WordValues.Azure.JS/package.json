@@ -3,7 +3,7 @@
   "version": "",
   "description": "",
   "scripts": {
-    "build": "parcel build Function.fs.js --out-dir WordValues --out-file index.js",
+    "build": "parcel build Function.fs.js --out-dir WordValue --out-file index.js",
     "test": "echo \"No tests yet...\""
   },
   "author": "",
