@@ -8,9 +8,11 @@
   <ItemGroup>
     <None Include="paket.references" />
     <None Include="Pulumi.yaml" />
-    <Compile Include="PulumiExtras.fs" />
     <Compile Include="Pulumi.Extras.Aws.fs" />
     <Compile Include="Program.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Pulumi.Extras\Pulumi.Extras.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
