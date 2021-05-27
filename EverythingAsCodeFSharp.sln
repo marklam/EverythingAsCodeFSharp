@@ -35,6 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		14 Search CloudTrail logs.md = 14 Search CloudTrail logs.md
 		15 Azure Javascipt Function.md = 15 Azure Javascipt Function.md
 		16 AWS Javascript Lambda.md = 16 AWS Javascript Lambda.md
+		17 Second Tidy-up.md = 17 Second Tidy-up.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AFF34F9C-C317-453C-9F0F-EBF2930C1963}"
@@ -55,7 +56,7 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "WordValues.Aws.JS", "WordVa
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Deployment.Azure", "Deployment.Azure\Deployment.Azure.fsproj", "{8A296FC9-837A-4EF4-9429-B630FFBFBDEE}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Pulumi.Extras", "Pulumi.Extras\Pulumi.Extras.fsproj", "{D1E53283-C330-46CA-84E8-F44AFEC2BA7E}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "PulumiExtras.Core", "PulumiExtras.Core\PulumiExtras.Core.fsproj", "{AECEADD5-66EF-45D8-AFC9-CA54EBEAFF7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -211,18 +212,18 @@ Global
 		{8A296FC9-837A-4EF4-9429-B630FFBFBDEE}.Release|x64.Build.0 = Release|Any CPU
 		{8A296FC9-837A-4EF4-9429-B630FFBFBDEE}.Release|x86.ActiveCfg = Release|Any CPU
 		{8A296FC9-837A-4EF4-9429-B630FFBFBDEE}.Release|x86.Build.0 = Release|Any CPU
-		{D1E53283-C330-46CA-84E8-F44AFEC2BA7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1E53283-C330-46CA-84E8-F44AFEC2BA7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1E53283-C330-46CA-84E8-F44AFEC2BA7E}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D1E53283-C330-46CA-84E8-F44AFEC2BA7E}.Debug|x64.Build.0 = Debug|Any CPU
-		{D1E53283-C330-46CA-84E8-F44AFEC2BA7E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D1E53283-C330-46CA-84E8-F44AFEC2BA7E}.Debug|x86.Build.0 = Debug|Any CPU
-		{D1E53283-C330-46CA-84E8-F44AFEC2BA7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1E53283-C330-46CA-84E8-F44AFEC2BA7E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D1E53283-C330-46CA-84E8-F44AFEC2BA7E}.Release|x64.ActiveCfg = Release|Any CPU
-		{D1E53283-C330-46CA-84E8-F44AFEC2BA7E}.Release|x64.Build.0 = Release|Any CPU
-		{D1E53283-C330-46CA-84E8-F44AFEC2BA7E}.Release|x86.ActiveCfg = Release|Any CPU
-		{D1E53283-C330-46CA-84E8-F44AFEC2BA7E}.Release|x86.Build.0 = Release|Any CPU
+		{AECEADD5-66EF-45D8-AFC9-CA54EBEAFF7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AECEADD5-66EF-45D8-AFC9-CA54EBEAFF7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AECEADD5-66EF-45D8-AFC9-CA54EBEAFF7C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AECEADD5-66EF-45D8-AFC9-CA54EBEAFF7C}.Debug|x64.Build.0 = Debug|Any CPU
+		{AECEADD5-66EF-45D8-AFC9-CA54EBEAFF7C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AECEADD5-66EF-45D8-AFC9-CA54EBEAFF7C}.Debug|x86.Build.0 = Debug|Any CPU
+		{AECEADD5-66EF-45D8-AFC9-CA54EBEAFF7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AECEADD5-66EF-45D8-AFC9-CA54EBEAFF7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AECEADD5-66EF-45D8-AFC9-CA54EBEAFF7C}.Release|x64.ActiveCfg = Release|Any CPU
+		{AECEADD5-66EF-45D8-AFC9-CA54EBEAFF7C}.Release|x64.Build.0 = Release|Any CPU
+		{AECEADD5-66EF-45D8-AFC9-CA54EBEAFF7C}.Release|x86.ActiveCfg = Release|Any CPU
+		{AECEADD5-66EF-45D8-AFC9-CA54EBEAFF7C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

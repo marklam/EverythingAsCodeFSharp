@@ -12,7 +12,7 @@
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pulumi.Extras\Pulumi.Extras.fsproj" />
+    <ProjectReference Include="..\PulumiExtras.Core\PulumiExtras.Core.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
