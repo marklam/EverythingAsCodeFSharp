@@ -17,9 +17,6 @@ let publishFile =
 let jsPublishFile =
     Path.Combine(parentFolder, "WordValues.Aws.JS", "publish.zip")
 
-let publishFileHash   = File.base64SHA256 publishFile
-let jsPublishFileHash = File.base64SHA256 jsPublishFile
-
 let infra () =
     let lambdaRole =
         Iam.Role (
@@ -48,25 +45,9 @@ let infra () =
             S3.BucketArgs()
         )
 
-    let codeBlob =
-        S3.BucketObject(
-            "lambdaCode",
-            S3.BucketObjectArgs(
-                Bucket = io codeBucket.BucketName,
-                Key    = input "lambdaCode.zip",
-                Source = input (File.assetOrArchive publishFile)
-            )
-        )
+    let lambdaCode   = S3.uploadCode codeBucket "lambdaCode.zip" publishFile
 
-    let jsCodeBlob =
-        S3.BucketObject(
-            "jsLambdaCode",
-            S3.BucketObjectArgs(
-                Bucket = io codeBucket.BucketName,
-                Key    = input "jsLambdaCode.zip",
-                Source = input (File.assetOrArchive jsPublishFile)
-            )
-        )
+    let jsLambdaCode = S3.uploadCode codeBucket "jsLambdaCode.zip" jsPublishFile
 
     let lambda =
         Lambda.Function(
@@ -75,9 +56,9 @@ let infra () =
                 Runtime        = inputUnion2Of2 Lambda.Runtime.Custom,
                 Handler        = input "bootstrap::WordValues.Aws.Function::functionHandler", // TODO - remove name dependency
                 Role           = io lambdaRole.Arn,
-                S3Bucket       = io codeBlob.Bucket,
-                S3Key          = io codeBlob.Key,
-                SourceCodeHash = input publishFileHash
+                S3Bucket       = io lambdaCode.Blob.Bucket,
+                S3Key          = io lambdaCode.Blob.Key,
+                SourceCodeHash = input lambdaCode.Hash
             )
         )
 
@@ -88,9 +69,9 @@ let infra () =
                 Runtime        = inputUnion2Of2 Lambda.Runtime.NodeJS14dX,
                 Handler        = input "index.functionHandler",
                 Role           = io lambdaRole.Arn,
-                S3Bucket       = io jsCodeBlob.Bucket,
-                S3Key          = io jsCodeBlob.Key,
-                SourceCodeHash = input jsPublishFileHash
+                S3Bucket       = io jsLambdaCode.Blob.Bucket,
+                S3Key          = io jsLambdaCode.Blob.Key,
+                SourceCodeHash = input jsLambdaCode.Hash
             )
         )
 
