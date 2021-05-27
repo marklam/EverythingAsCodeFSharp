@@ -4,11 +4,7 @@ open System.IO
 
 open Pulumi
 open Pulumi.FSharp
-open Pulumi.AzureNative.Resources
-open Pulumi.AzureNative.Storage
-open Pulumi.AzureNative.Storage.Inputs
-open Pulumi.AzureNative.Web
-open Pulumi.AzureNative.Insights
+open Pulumi.AzureNative
 
 open PulumiExtras.Core
 open PulumiExtras.Azure
@@ -22,27 +18,27 @@ let publishJSZip =
     Path.Combine(parentFolder, "WordValues.Azure.JS", "publish.zip")
 
 let infra () =
-    let resourceGroup = ResourceGroup("functions-rg")
+    let resourceGroup = Resources.ResourceGroup("functions-rg")
 
     let storageAccount =
-        let skuArgs = SkuArgs(Name = inputUnion2Of2 SkuName.Standard_LRS)
-        StorageAccount(
+        let skuArgs = Storage.Inputs.SkuArgs(Name = inputUnion2Of2 Storage.SkuName.Standard_LRS)
+        Storage.StorageAccount(
             "sa",
-            StorageAccountArgs(
+            Storage.StorageAccountArgs(
                 ResourceGroupName = io resourceGroup.Name,
                 Sku               = input skuArgs,
-                Kind              = inputUnion2Of2 Kind.StorageV2
+                Kind              = inputUnion2Of2 Storage.Kind.StorageV2
             )
         )
 
-    let storageConnection = getConnectionString storageAccount resourceGroup
+    let storageConnection = Storage.getConnectionString storageAccount resourceGroup
 
     let appServicePlan =
-        let skuArgs = Inputs.SkuDescriptionArgs(Tier = input "Dynamic", Name = input "Y1")
+        let skuArgs = Web.Inputs.SkuDescriptionArgs(Tier = input "Dynamic", Name = input "Y1")
 
-        AppServicePlan(
+        Web.AppServicePlan(
             "functions-asp",
-            AppServicePlanArgs(
+            Web.AppServicePlanArgs(
                 ResourceGroupName = io resourceGroup.Name,
                 Kind              = input "FunctionApp",
                 Sku               = input skuArgs
@@ -50,58 +46,31 @@ let infra () =
         )
 
     let container =
-        BlobContainer(
+        Storage.BlobContainer(
             "zips-container",
-            BlobContainerArgs(
+            Storage.BlobContainerArgs(
                 AccountName       = io storageAccount.Name,
-                PublicAccess      = input PublicAccess.None,
+                PublicAccess      = input Storage.PublicAccess.None,
                 ResourceGroupName = io resourceGroup.Name
             )
         )
 
-    let blob =
-        Blob(
-            "zip",
-            BlobArgs(
-                AccountName       = io storageAccount.Name,
-                ContainerName     = io container.Name,
-                ResourceGroupName = io resourceGroup.Name,
-                Type              = input BlobType.Block,
-                Source            = input (FileArchive publishFolder :> AssetOrArchive)
-            )
-        )
-
-    let codeBlobUrl = signedBlobReadUrl blob container storageAccount resourceGroup
-
-    let jsBlob =
-        Blob(
-            "jszip",
-            BlobArgs(
-                AccountName       = io storageAccount.Name,
-                ContainerName     = io container.Name,
-                ResourceGroupName = io resourceGroup.Name,
-                Type              = input BlobType.Block,
-                Source            = input (FileArchive publishJSZip :> AssetOrArchive)
-            )
-        )
-
-    let jsCodeBlobUrl = signedBlobReadUrl jsBlob container storageAccount resourceGroup
-
     let appInsights =
-        Component(
+        Insights.Component(
             "appInsights",
-            ComponentArgs(
-                ApplicationType = inputUnion2Of2 ApplicationType.Web,
+            Insights.ComponentArgs(
+                ApplicationType = inputUnion2Of2 Insights.ApplicationType.Web,
                 Kind = input "web",
                 ResourceGroupName = io resourceGroup.Name
             )
         )
 
-    let app =
-        let appName = Random.decorate "app"
+    let endpoint =
+        let codeBlob = Storage.uploadCode "zip" publishFolder storageAccount container resourceGroup
+        let appName  = Random.decorate "app"
 
         let siteConfig =
-            Inputs.SiteConfigArgs(
+            Web.Inputs.SiteConfigArgs(
                 AppSettings =
                     InputList.ofNamedInputValues [
                         ("APPINSIGHTS_INSTRUMENTATIONKEY",           io appInsights.InstrumentationKey)
@@ -110,27 +79,20 @@ let infra () =
                         ("FUNCTIONS_WORKER_RUNTIME",                 input "dotnet-isolated")
                         ("WEBSITE_CONTENTAZUREFILECONNECTIONSTRING", io storageConnection)
                         ("WEBSITE_CONTENTSHARE",                     io appName)
-                        ("WEBSITE_RUN_FROM_PACKAGE",                 io codeBlobUrl)
+                        ("WEBSITE_RUN_FROM_PACKAGE",                 io codeBlob.SignedReadUrl)
                     ],
                 NetFrameworkVersion = input "v5.0"
             )
 
-        WebApp(
-            "app",
-            WebAppArgs(
-                Name              = io appName,
-                Kind              = input "FunctionApp",
-                ResourceGroupName = io resourceGroup.Name,
-                ServerFarmId      = io appServicePlan.Id,
-                SiteConfig        = input siteConfig
-            )
-        )
+        let appAndEndpoint = Web.createApp "app" appName siteConfig appServicePlan resourceGroup
+        appAndEndpoint.Endpoint
 
-    let jsApp =
-        let appName = Random.decorate "jsapp"
+    let jsEndpoint =
+        let codeBlob = Storage.uploadCode "jszip" publishJSZip storageAccount container resourceGroup
+        let appName  = Random.decorate "jsapp"
 
         let siteConfig =
-            Inputs.SiteConfigArgs(
+            Web.Inputs.SiteConfigArgs(
                 AppSettings =
                     InputList.ofNamedInputValues [
                         ("APPINSIGHTS_INSTRUMENTATIONKEY",           io appInsights.InstrumentationKey)
@@ -139,26 +101,15 @@ let infra () =
                         ("FUNCTIONS_WORKER_RUNTIME",                 input "node")
                         ("WEBSITE_CONTENTAZUREFILECONNECTIONSTRING", io storageConnection)
                         ("WEBSITE_CONTENTSHARE",                     io appName)
-                        ("WEBSITE_RUN_FROM_PACKAGE",                 io jsCodeBlobUrl)
+                        ("WEBSITE_RUN_FROM_PACKAGE",                 io codeBlob.SignedReadUrl)
                         ("WEBSITE_NODE_DEFAULT_VERSION",             input "~14")
                     ],
                 Http20Enabled = input true,
                 NodeVersion   = input "~14"
             )
 
-        WebApp(
-            "jsapp",
-            WebAppArgs(
-                Name              = io appName,
-                Kind              = input "FunctionApp",
-                ResourceGroupName = io resourceGroup.Name,
-                ServerFarmId      = io appServicePlan.Id,
-                SiteConfig        = input siteConfig
-            )
-        )
-
-    let endpoint   = Output.format $"https://{app.DefaultHostName}/api/WordValue" // TODO - remove hardcoded 'api' and 'WordValue'
-    let jsEndpoint = Output.format $"https://{jsApp.DefaultHostName}/api/WordValue" // TODO - remove hardcoded 'api' and 'WordValue'
+        let appAndEndpoint = Web.createApp "jsapp" appName siteConfig appServicePlan resourceGroup
+        appAndEndpoint.Endpoint
 
     dict [
         "resouceGroup",   resourceGroup.Name  :> obj
@@ -166,7 +117,6 @@ let infra () =
         "endpoint",       endpoint            :> obj
         "jsEndpoint",     jsEndpoint          :> obj
     ]
-
 
 [<EntryPoint>]
 let main _ =

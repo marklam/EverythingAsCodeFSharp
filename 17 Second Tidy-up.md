@@ -33,3 +33,6 @@ let anonymousAnyMethod name (ctx : {| Resource : Resource; RestApi : RestApi |})
         {| ctx with Method = method |}
 ```
 - these functions can then be piped.
+## Reduce duplication in the Deplyoyment.Azure project
+- Extracted some code to upload the code to blob storage and get the url for creating the Azure Function
+- Extracted some code to create the Azure Function and return its endpoint
