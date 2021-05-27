@@ -10,6 +10,7 @@
     <Compile Include="PulumiStack.fs" />
     <Compile Include="AzurePulumiStackInstance.fs" />
     <Compile Include="AwsPulumiStackInstance.fs" />
+    <Compile Include="TestWordValueEndpoints.fs" />
     <Compile Include="Azure.fs" />
     <Compile Include="AzureJS.fs" />
     <Compile Include="Aws.fs" />
