@@ -4,6 +4,7 @@ open System
 
 open Xunit
 
+open Testing.Apis
 open Deployment.Tests
 
 // TODO - category for slow tests that require cloud function

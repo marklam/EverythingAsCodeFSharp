@@ -10,6 +10,7 @@
     <Compile Include="Tests.fs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Testing.Apis\Testing.Apis.fsproj" />
     <ProjectReference Include="..\Testing.AzureLocal\Testing.AzureLocal.fsproj" />
     <ProjectReference Include="..\WordValues.Azure\WordValues.Azure.fsproj" />
   </ItemGroup>

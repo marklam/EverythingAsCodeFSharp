@@ -1,4 +1,4 @@
-﻿namespace Deployment.Tests
+﻿namespace Testing.Apis
 
 open System
 open System.Net
@@ -22,6 +22,19 @@ type TestWordValueEndpoints (getEndpointUrl : unit -> Uri)  =
 
         Assert.Equal(HttpStatusCode.BadRequest, response.statusCode)
         Assert.Equal("Required query parameter 'word' was missing", response |> Response.toText)
+
+    [<Fact>]
+    member _.``WordValue with no 'word' query parameter returns an error`` () =
+        let endpoint = getEndpointUrl()
+        let testUri = Uri(endpoint, "?spoons=3")
+
+        let response =
+            get testUri.AbsoluteUri
+            |> Request.send
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.statusCode)
+        Assert.Equal("Required query parameter 'word' was missing", response |> Response.toText)
+
 
     [<Fact>]
     member _.``WordValue returns the correct message`` () =
