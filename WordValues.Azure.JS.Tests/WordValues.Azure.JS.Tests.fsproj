@@ -7,10 +7,11 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="paket.references" />
-    <Compile Include="AzureFunc.fs" />
     <Compile Include="Tests.fs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Testing.Apis\Testing.Apis.fsproj" />
+    <ProjectReference Include="..\Testing.AzureLocal\Testing.AzureLocal.fsproj" />
     <ProjectReference Include="..\WordValues.Azure.JS\WordValues.Azure.JS.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />

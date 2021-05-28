@@ -8,7 +8,7 @@
   <ItemGroup>
     <None Include="paket.references" />
     <None Include="Pulumi.yaml" />
-    <Compile Include="Pulumi.Extras.Aws.fs" />
+    <Compile Include="PulumiExtras.Azure.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
