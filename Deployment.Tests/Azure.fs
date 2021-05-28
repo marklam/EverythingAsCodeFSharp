@@ -7,7 +7,7 @@ open Xunit
 open Deployment.Tests
 
 // TODO - category for slow tests that require cloud function
-[<Collection("Azure stack tests")>]
+[<Collection(TestCollections.AzureStack)>]
 type TestAzureFunc (stack : AzurePulumiStackInstance) =
     inherit TestWordValueEndpoints(fun () -> Uri(stack.GetOutputs().["endpoint"].Value :?> string, UriKind.Absolute))
     interface IClassFixture<AzurePulumiStackInstance>

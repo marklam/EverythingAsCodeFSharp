@@ -16,3 +16,6 @@ type PulumiStack (stackName, folder, envVars) =
     member _.GetOutputs() =
         outputs.Result
 
+module TestCollections =
+    let [<Literal>] AzureStack = "Azure Stack Tests"
+    let [<Literal>] AwsStack   = "Aws Stack Tests"

@@ -7,7 +7,7 @@ open Xunit
 open Deployment.Tests
 
 // TODO - category for slow tests that require cloud function
-[<Collection("Aws stack tests")>]
+[<Collection(TestCollections.AwsStack)>]
 type TestAwsLambda (stack : AwsPulumiStackInstance) =
     inherit TestWordValueEndpoints(fun () -> Uri(stack.GetOutputs().["endpoint"].Value :?> string, UriKind.Absolute))
     interface IClassFixture<AwsPulumiStackInstance>
