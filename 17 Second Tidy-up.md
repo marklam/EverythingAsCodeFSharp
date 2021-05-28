@@ -76,6 +76,15 @@ That resulted in the less obtrusive warning
 ```
 No test is available in C:\git\EverythingAsCodeFSharpTidy\Testing.Apis\bin\Debug\net5.0\Testing.Apis.dll. Make sure that test discoverer & executors are registered and platform & framework version settings are appropriate and try again.
 ```
+### Package updates
+Updated the dotnet packages with
+```cmd
+dotnet tool list
+dotnet tool update paket
+dotnet tool update fake-cli
+dotnet tool update fable
+dotnet paket update
+```
 
 
 
