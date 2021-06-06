@@ -359,3 +359,4 @@ MigrationBackup/
 # Deployment files
 */publish.zip
 
+/Deployment.Tests/deployment.runsettings

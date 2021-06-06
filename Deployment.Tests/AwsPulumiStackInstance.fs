@@ -6,8 +6,8 @@ open Deployment.Tests
 
 module private Deployment =
     let folder = Path.Combine(DirectoryInfo(__SOURCE_DIRECTORY__).Parent.FullName, "Deployment.Aws")
-    let envVars = dict [ "PULUMI_CONFIG_PASSPHRASE", "My secure passphrase" ]
+    let envVars = dict [ ]
 
 type AwsPulumiStackInstance() =
-    inherit PulumiStack("dev", Deployment.folder, Deployment.envVars)
+    inherit PulumiStack("aws-dev", Deployment.folder, Deployment.envVars)
 
