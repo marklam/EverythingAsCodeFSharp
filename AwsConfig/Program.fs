@@ -189,9 +189,32 @@ let infra () =
             )
         )
 
+    let deploymentStateBucket =
+        S3.Bucket(
+            "deploymentState",
+            S3.BucketArgs()
+        )
+
+    let deploymentStateAccess =
+        S3.BucketPublicAccessBlock(
+            "deploymentStateAccess",
+            S3.BucketPublicAccessBlockArgs(
+                Bucket                = io deploymentStateBucket.Id,
+                BlockPublicAcls       = input true,
+                BlockPublicPolicy     = input true,
+                RestrictPublicBuckets = input true,
+                IgnorePublicAcls      = input true
+            )
+        )
+
+    let backendStateRoot =
+        deploymentStateBucket.BucketName
+        |> Outputs.apply (fun bn -> $"s3://{bn}")
+
     dict [
-        "deploy.AWS_ACCESS_KEY_ID",     deployAccess.Id :> obj
+        "deploy.AWS_ACCESS_KEY_ID",     deployAccess.Id     :> obj
         "deploy.AWS_SECRET_ACCESS_KEY", deployAccess.Secret :> obj
+        "backendStateRoot",             backendStateRoot    :> obj
     ]
 
 [<EntryPoint>]
