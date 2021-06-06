@@ -21,4 +21,4 @@ jobs:
     - name: Restore tools
       run: dotnet tool restore
     - name: Build
-      run: dotnet fake -f build.fsx -t Build
+      run: dotnet fake build -f build.fsx -t Build
