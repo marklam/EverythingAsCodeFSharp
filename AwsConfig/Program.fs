@@ -199,9 +199,11 @@ let infra () =
         S3.BucketPublicAccessBlock(
             "deploymentStateAccess",
             S3.BucketPublicAccessBlockArgs(
-                Bucket            = io deploymentStateBucket.Id,
-                BlockPublicAcls   = input true,
-                BlockPublicPolicy = input true
+                Bucket                = io deploymentStateBucket.Id,
+                BlockPublicAcls       = input true,
+                BlockPublicPolicy     = input true,
+                RestrictPublicBuckets = input true,
+                IgnorePublicAcls      = input true
             )
         )
 
