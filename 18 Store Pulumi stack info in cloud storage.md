@@ -109,4 +109,10 @@ and added a property to `Deployment.Tests.fsproj`:
 ```xml
 <RunSettingsFilePath>$(MSBuildProjectDirectory)\deployment.runsettings</RunSettingsFilePath>`
 ```
+### Making tests fail helpfully
+With the code as it stands, running the tests (say with `dotnet test`) will just report that the `deployment.runsettings` file does not exist.
+
+Instead, I added (`git add -f deployment.runsettings`) a file with a commented-out `EnvironmentVariables` section, and repurposed the `envVars` parameter to the `PulumiStack` test helper to be a list of environment variables that we want to check for. If they're not found then we can fail with a helpful message.
+
+That way, running the tests in a fresh clone will report what's missing - and the either the file can be edited or the environment variables could be set insted.
 

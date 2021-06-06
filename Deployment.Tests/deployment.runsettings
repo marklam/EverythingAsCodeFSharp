@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <EnvironmentVariables>
+    <!--
+      <PULUMI_CONFIG_PASSPHRASE>...</PULUMI_CONFIG_PASSPHRASE>
+      <AWS_REGION>...</AWS_REGION>
+      <AWS_ACCESS_KEY_ID>...</AWS_ACCESS_KEY_ID>
+      <AWS_SECRET_ACCESS_KEY>...</AWS_SECRET_ACCESS_KEY>
+      -->
+    </EnvironmentVariables>
+  </RunConfiguration>
+</RunSettings>
