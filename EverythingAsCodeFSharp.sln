@@ -37,12 +37,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		16 AWS Javascript Lambda.md = 16 AWS Javascript Lambda.md
 		17 Second Tidy-up.md = 17 Second Tidy-up.md
 		18 Store Pulumi stack info in cloud storage.md = 18 Store Pulumi stack info in cloud storage.md
+		19 Creating an automated build.md = 19 Creating an automated build.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AFF34F9C-C317-453C-9F0F-EBF2930C1963}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		build.fsx = build.fsx
+		.github\workflows\build.yaml = .github\workflows\build.yaml
 		paket.dependencies = paket.dependencies
 		paket.lock = paket.lock
 	EndProjectSection
