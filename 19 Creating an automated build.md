@@ -22,3 +22,5 @@ The next problem was
 ```
 
 I suspected this was because that package targets `netcoreapp3.1`, so I added an extra build step to the yaml to install that version of the .net core sdk.
+
+That was enough to get it building, so I changed the triggers in the yaml file to build on Pull Request or on a Push to the `main` branch.
