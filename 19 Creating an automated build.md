@@ -24,3 +24,26 @@ The next problem was
 I suspected this was because that package targets `netcoreapp3.1`, so I added an extra build step to the yaml to install that version of the .net core sdk.
 
 That was enough to get it building, so I changed the triggers in the yaml file to build on Pull Request or on a Push to the `main` branch.
+
+### The default branch
+The example syntax for building the default branch and Pull Requests
+```yaml
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+```
+didn't seem to work, but it looked likely to be due to the `default-branch` macro not having been set. 
+
+I found that Pulumi could set this with the `DefaultBranch` property of `RepositoryArgs`, but that was marked as obsolete. The preferred approach is to use a `BranchDefault` resource:
+```fsharp
+    let defaultBranch =
+        Pulumi.Github.BranchDefault(
+            "EverythingAsCodeFSharpDefaultBranch",
+            BranchDefaultArgs(
+                Repository = io repo.Name,
+                Branch     = input "main"
+            )
+        )
+```
