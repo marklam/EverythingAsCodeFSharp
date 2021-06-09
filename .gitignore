@@ -360,3 +360,4 @@ MigrationBackup/
 */publish.zip
 
 /Deployment.Tests/deployment.runsettings
+/.vscode
