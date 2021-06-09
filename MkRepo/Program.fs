@@ -11,8 +11,16 @@ let infra () =
                 Name              = input "EverythingAsCodeFSharp",
                 Description       = input "Cloud projects with devops, deployment and build all done in code. In F#.",
                 Visibility        = input "public",
-                GitignoreTemplate = input "VisualStudio",
-                DefaultBranch     = input "main"
+                GitignoreTemplate = input "VisualStudio"
+            )
+        )
+
+    let defaultBranch =
+        Pulumi.Github.BranchDefault(
+            "EverythingAsCodeFSharpDefaultBranch",
+            BranchDefaultArgs(
+                Repository = io repo.Name,
+                Branch     = input "main"
             )
         )
 
