@@ -11,7 +11,8 @@ let infra () =
                 Name              = input "EverythingAsCodeFSharp",
                 Description       = input "Cloud projects with devops, deployment and build all done in code. In F#.",
                 Visibility        = input "public",
-                GitignoreTemplate = input "VisualStudio"
+                GitignoreTemplate = input "VisualStudio",
+                HasIssues         = input true
             )
         )
 
