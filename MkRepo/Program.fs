@@ -10,7 +10,7 @@ let infra () =
             RepositoryArgs(
                 Name = input "EverythingAsCodeFSharp",
                 Description = input "Cloud projects with devops, deployment and build all done in code. In F#.",
-                Visibility = input "private",
+                Visibility = input "public",
                 GitignoreTemplate = input "VisualStudio"
             )
         )
