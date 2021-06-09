@@ -8,10 +8,11 @@ let infra () =
         Repository(
             "EverythingAsCodeFSharp",
             RepositoryArgs(
-                Name = input "EverythingAsCodeFSharp",
-                Description = input "Cloud projects with devops, deployment and build all done in code. In F#.",
-                Visibility = input "public",
-                GitignoreTemplate = input "VisualStudio"
+                Name              = input "EverythingAsCodeFSharp",
+                Description       = input "Cloud projects with devops, deployment and build all done in code. In F#.",
+                Visibility        = input "public",
+                GitignoreTemplate = input "VisualStudio",
+                DefaultBranch     = input "main"
             )
         )
 
