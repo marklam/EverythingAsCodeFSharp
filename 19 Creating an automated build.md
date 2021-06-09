@@ -47,3 +47,5 @@ I found that Pulumi could set this with the `DefaultBranch` property of `Reposit
             )
         )
 ```
+
+However, that still didn't work. A [StackOverflow answer](https://stackoverflow.com/a/65723433/59371) explains that the `[ $default-branch ]` is for workflow *templates*, not the workflows themselves. The macro would be replaced by `main` for a workflow yaml file.
