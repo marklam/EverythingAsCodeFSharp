@@ -7,10 +7,16 @@ open FsCheck
 open FsCheck.Xunit
 open Swensen.Unquote
 
+open Testing.Services
+
 open WordValues
 
 let reverse (str: string) =
     str |> Seq.rev |> Array.ofSeq |> String
+
+// Partially bind the Testing Logger implementation
+module Calculate =
+    let wordValue = Calculate.wordValue (TestLogger.Default)
 
 [<Fact>]
 let ``Value of 'HELLO' is correct`` () =

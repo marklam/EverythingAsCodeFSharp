@@ -8,9 +8,11 @@
     <Compile Include="Interfaces.fs" />
     <Compile Include="Request.fs" />
     <Compile Include="Response.fs" />
+    <Compile Include="Services.fs" />
     <Compile Include="Function.fs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Services.JS\Services.JS.fsproj" />
     <ProjectReference Include="..\WordValues\WordValues.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />

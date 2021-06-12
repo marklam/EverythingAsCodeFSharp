@@ -9,6 +9,7 @@
     <Compile Include="TestCalculate.fs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Testing.Services\Testing.Services.fsproj" />
     <ProjectReference Include="..\WordValues\WordValues.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />

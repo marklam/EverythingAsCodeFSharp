@@ -7,9 +7,11 @@
   <ItemGroup>
     <Compile Include="APIGatewayProxyRequest.fs" />
     <Compile Include="APIGatewayProxyResponse.fs" />
+    <Compile Include="Services.fs" />
     <Compile Include="Function.fs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Services.JS\Services.JS.fsproj" />
     <ProjectReference Include="..\WordValues\WordValues.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />

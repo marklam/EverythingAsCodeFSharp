@@ -20,6 +20,7 @@
     <None Include="Readme.md" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Services.Clr\Services.Clr.fsproj" />
     <ProjectReference Include="..\WordValues\WordValues.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
