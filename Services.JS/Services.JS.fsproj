@@ -3,16 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="APIGatewayProxyRequest.fs" />
-    <Compile Include="APIGatewayProxyResponse.fs" />
-    <Compile Include="Services.fs" />
-    <Compile Include="Function.fs" />
+    <Compile Include="Logging.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Services.JS\Services.JS.fsproj" />
-    <ProjectReference Include="..\WordValues\WordValues.fsproj" />
+    <ProjectReference Include="..\Services\Services.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

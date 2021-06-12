@@ -2,12 +2,15 @@ namespace WordValues.Aws
 
 open System
 open System.Net
+open Microsoft.Extensions.Logging
 open Thoth.Json.Net
 
 open Amazon.Lambda.Core
 open Amazon.Lambda.RuntimeSupport
 open Amazon.Lambda.Serialization.SystemTextJson
 open Amazon.Lambda.APIGatewayEvents
+
+open Services.Clr
 
 open WordValues
 
@@ -24,6 +27,7 @@ module Dictionary =
         | true,  v -> Some v
 
 module Function =
+    let logger = MicrosoftLogger(LoggerFactory.Create(fun builder -> builder.AddLambdaLogger() |> ignore).CreateLogger("Function"))
 
     let functionHandler (request : APIGatewayProxyRequest) =
         let wordParam =
@@ -33,7 +37,7 @@ module Function =
 
         match wordParam with
         | Some word ->
-            let result = Calculate.wordValue word
+            let result = Calculate.wordValue logger word
             let content = result |> WordValue.Encoder |> Encode.toString 0
 
             APIGatewayProxyResponse(

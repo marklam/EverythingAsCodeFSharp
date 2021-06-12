@@ -4,6 +4,7 @@ storage: none
 framework: auto-detect
 nuget Amazon.Lambda.APIGatewayEvents
 nuget Amazon.Lambda.Core
+nuget Amazon.Lambda.Logging.AspNetCore
 nuget Amazon.Lambda.RuntimeSupport
 nuget Amazon.Lambda.Serialization.SystemTextJson
 nuget Amazon.Lambda.TestUtilities

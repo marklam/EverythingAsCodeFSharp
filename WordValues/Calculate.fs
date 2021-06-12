@@ -8,6 +8,8 @@ open Thoth.Json
 open Thoth.Json.Net
 #endif
 
+open Services
+
 type WordValue = { Value : int; Warning : string option }
     with
         static member Encoder (v : WordValue) =
@@ -19,7 +21,9 @@ type WordValue = { Value : int; Warning : string option }
             ]
 
 module Calculate =
-    let wordValue (text : string) : WordValue =
+    let wordValue (logger : ILogger) (text : string) : WordValue =
+        Log.info logger (LogEvent.Create("wordValue of {text}", text))
+
         let (letters, nonLetters) =
             text.ToUpper()
             |> List.ofSeq
@@ -40,6 +44,8 @@ module Calculate =
                 |> String.concat ","
                 |> sprintf "Ignored %s"
                 |> Some
+
+        Log.info logger (LogEvent.Create("wordValue returning value {value} with warning {warning}", value, warning))
 
         {
             Value   = value

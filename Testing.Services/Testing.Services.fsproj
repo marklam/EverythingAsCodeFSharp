@@ -3,14 +3,13 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="paket.references" />
-    <Compile Include="TestCalculate.fs" />
+    <Compile Include="Logging.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Testing.Services\Testing.Services.fsproj" />
-    <ProjectReference Include="..\WordValues\WordValues.fsproj" />
+    <ProjectReference Include="..\Services\Services.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

@@ -42,13 +42,22 @@ let buildOpt (opt : DotNet.BuildOptions) =
 let testOpt (opt : DotNet.TestOptions) =
     opt.WithCommon dotNetOpt
 
+type ProcessHelpers =
+    static member checkResult (p : ProcessResult) =
+        if p.ExitCode <> 0
+        then failwithf "Expected exit code 0, but was %d" p.ExitCode
+
+    static member checkResult (p : ProcessResult<_>) =
+        if p.ExitCode <> 0
+        then failwithf "Expected exit code 0, but was %d" p.ExitCode
+
 let runExe exe workingFolder arguments =
     Command.RawCommand (exe, Arguments.ofList arguments)
     |> CreateProcess.fromCommand
     |> CreateProcess.withWorkingDirectory workingFolder
     |> CreateProcess.ensureExitCode
     |> Proc.run
-    |> ignore
+    |> ProcessHelpers.checkResult
 
 let build =
     Target.create "Build" "Build the solution" (fun _ ->
@@ -68,8 +77,10 @@ let publishAzureFunc =
 let publishAzureJSFunc =
     Target.create "PublishAzureJSFunc" "Publish the Azure Function as Javascript" (fun _ ->
         let projectFolder = solutionFolder </> "WordValues.Azure.JS"
-        DotNet.exec dotNetOpt "fable" "WordValues.Azure.JS" |> ignore
-        Yarn.exec "build" (fun opt -> { opt with WorkingDirectory = projectFolder })
+        let yarnParams (opt : Yarn.YarnParams) = { opt with WorkingDirectory = projectFolder }
+        DotNet.exec dotNetOpt "fable" "WordValues.Azure.JS" |> ProcessHelpers.checkResult
+        Yarn.install yarnParams
+        Yarn.exec "build" yarnParams
         let publishZip = System.IO.Path.Combine(projectFolder, "publish.zip")
         let zipFiles =
             !! (projectFolder </> "WordValue/**/*.*")
@@ -88,8 +99,10 @@ let publishAwsLambda =
 let publishAwsJSLambda =
     Target.create "PublishAwsJSLambda" "Publish the Aws Lambda as Javascript" (fun _ ->
         let projectFolder = solutionFolder </> "WordValues.Aws.JS"
-        DotNet.exec dotNetOpt "fable" "WordValues.Aws.JS" |> ignore
-        Yarn.exec "build" (fun opt -> { opt with WorkingDirectory = projectFolder })
+        let yarnParams (opt : Yarn.YarnParams) = { opt with WorkingDirectory = projectFolder }
+        DotNet.exec dotNetOpt "fable" "WordValues.Aws.JS" |> ProcessHelpers.checkResult
+        Yarn.install yarnParams
+        Yarn.exec "build" yarnParams
         let publishZip = System.IO.Path.Combine(projectFolder, "publish.zip")
         let zipFiles =
             !! (projectFolder </> "WordValue/**/*.*")
@@ -127,6 +140,9 @@ let deployedTest =
         DotNet.test testOpt "Deployment.Tests"
     )
 
+let publishAll =
+    Target.create "PublishAll" "Publish all the Functions and Lambdas" ignore
+
 build ==> unitTests
 build ==> publishAzureFunc
 build ==> publishAzureJSFunc
@@ -141,6 +157,12 @@ publishAzureJSFunc ==> pulumiDeployAzure
 
 publishAwsLambda   ==> pulumiDeployAws
 publishAwsJSLambda ==> pulumiDeployAws
+
+publishAzureFunc   ==> publishAll
+publishAzureJSFunc ==> publishAll
+publishAwsLambda   ==> publishAll
+publishAwsJSLambda ==> publishAll
+
 
 // Default target
 Target.runOrDefault build

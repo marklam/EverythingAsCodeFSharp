@@ -11,6 +11,7 @@ open Response
 open Request
 
 open WordValues
+open Services
 
 let run (context : Context) (request : HttpRequest) =
     let wordParam = request.query.["word"]
@@ -18,9 +19,12 @@ let run (context : Context) (request : HttpRequest) =
     let response = createEmpty<Response>
     response.headers <- createEmpty<IResponseHeaders> // Is initially null
 
+
+    let logger = ConsoleLogger("Function", context.log)
+
     match wordParam with
     | Some word ->
-        let result = Calculate.wordValue word
+        let result = Calculate.wordValue logger word
         let content = result |> WordValue.Encoder |> Encode.toString 0
 
         response.statusCode <- (HttpStatusCode.OK |> float |> U2<string, float>.op_ErasedCast |> Some)

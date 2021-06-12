@@ -8,8 +8,11 @@ open Amazon.Lambda.APIGatewayEvents.Request
 open Amazon.Lambda.APIGatewayEvents.Response
 
 open WordValues
+open Services
 
 let functionHandler (request : APIGatewayProxyRequest, _) =
+    let logger = ConsoleLogger ("Function")
+
     promise {
         let wordParam =
             request.queryStringParameters
@@ -20,7 +23,7 @@ let functionHandler (request : APIGatewayProxyRequest, _) =
 
         match wordParam with
         | Some word ->
-            let result = Calculate.wordValue word
+            let result = Calculate.wordValue logger word
             let content = result |> WordValue.Encoder |> Encode.toString 0
 
             response.statusCode <- int HttpStatusCode.OK
