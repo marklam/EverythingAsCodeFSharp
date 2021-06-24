@@ -16,7 +16,8 @@ let reverse (str: string) =
 
 // Partially bind the Testing Logger implementation
 module Calculate =
-    let wordValue = Calculate.wordValue (TestLogger.Default)
+    let wordValue      = Calculate.wordValue      (TestLogger.Default)
+    let wordsFromValue = Calculate.wordsFromValue (TestLogger.Default)
 
 [<Fact>]
 let ``Value of 'HELLO' is correct`` () =
@@ -66,3 +67,49 @@ let ``Warning contains non-letters`` (nnstr : NonNull<string>) =
 
     Seq.isEmpty notWarnedAbout
 
+let dictionary = [ ("1", 1); ("2", 2); ("5", 5); ("12", 12) ]
+
+[<Fact>]
+let ``wordsFromValue has no results for impossible totals`` () =
+    test <@ Calculate.wordsFromValue dictionary  0 = [] @>
+    test <@ Calculate.wordsFromValue dictionary -7 = [] @>
+
+[<Fact>]
+let ``wordsFromValue builds correct sequences`` () =
+    let expectedSevens =
+        [
+            [ "1"; "1"; "1"; "1"; "1"; "1"; "1" ]
+            [ "2"; "1"; "1"; "1"; "1"; "1" ]
+            [ "2"; "2"; "1"; "1"; "1" ]
+            [ "2"; "2"; "2"; "1" ]
+            [ "5"; "1"; "1" ]
+            [ "5"; "2" ]
+        ]
+
+    let actual =
+        Calculate.wordsFromValue dictionary 7
+        |> List.map (List.sortDescending)
+        |> List.sort
+
+    test <@ actual = expectedSevens @>
+
+type WordList =
+    | WordList of (string*int) list with
+    static member Generator =
+        let genWord =
+            Arb.generate<char>
+            |> Gen.filter (Char.IsLetter)
+            |> Gen.arrayOf
+            |> Gen.map String
+
+        genWord
+        |> Gen.map (fun w -> w, (Calculate.wordValue w).Value)
+        |> Gen.filter (fun (w, v) -> v > 0)
+        |> Gen.listOf
+        |> Gen.map WordList
+        |> Arb.fromGen
+
+[<Property( Arbitrary=[| typeof<WordList> |] )>]
+let ``wordsFromValue matches wordValue`` (WordList wordList) (PositiveInt target) =
+    Calculate.wordsFromValue wordList target
+    |> List.forall (fun words -> (Calculate.wordValue (String.concat " " words)).Value = target)

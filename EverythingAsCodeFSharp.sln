@@ -39,6 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		18 Store Pulumi stack info in cloud storage.md = 18 Store Pulumi stack info in cloud storage.md
 		19 Creating an automated build.md = 19 Creating an automated build.md
 		20 Logging.md = 20 Logging.md
+		21 Extra Functionality.md = 21 Extra Functionality.md
 		README.md = README.md
 	EndProjectSection
 EndProject
