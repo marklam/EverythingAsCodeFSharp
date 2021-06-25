@@ -19,7 +19,7 @@ Currently:
 * Deploying to Azure from Pulumi
 * Unit tests
 * Integration tests
-* Property-based testing with FsCheck
+* Property-based testing with ~~FsCheck~~Hedgehog
 * Build scripts in Fake
 * Aws Lambdas in .net 5
 * Infrastucture and Deployment to AWS from Pulumi 

@@ -21,17 +21,20 @@ type WordValue = { Value : int; Warning : string option }
             ]
 
 module Calculate =
+    let isAsciiUCLetter c =
+        c >= 'A' && c <= 'Z'
+
     let wordValue (logger : ILogger) (text : string) : WordValue =
         Log.info logger (LogEvent.Create("wordValue of {text}", text))
 
         let (letters, nonLetters) =
             text.ToUpper()
             |> List.ofSeq
-            |> List.partition (Char.IsLetter)
+            |> List.partition isAsciiUCLetter
 
         let value =
             letters
-            |> List.sumBy (fun letter -> (int letter) - (int 'A') + 1)
+            |> List.sumBy (fun letter -> (Char.ToUpperInvariant letter |> int) - (int 'A') + 1)
 
         let warning =
             if List.isEmpty nonLetters then
