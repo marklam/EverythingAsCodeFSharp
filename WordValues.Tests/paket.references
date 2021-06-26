@@ -4,4 +4,4 @@ xunit.runner.visualstudio
 coverlet.collector
 FSharp.Core
 Unquote
-FsCheck.Xunit
+Hedgehog

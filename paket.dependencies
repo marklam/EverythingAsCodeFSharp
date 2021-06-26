@@ -11,8 +11,8 @@ nuget Amazon.Lambda.TestUtilities
 nuget coverlet.collector
 nuget Fable.Core
 nuget Fable.Promise
-nuget FsCheck.Xunit
 nuget FSharp.Core
+nuget Hedgehog
 nuget Microsoft.Azure.Functions.Worker
 nuget Microsoft.Azure.Functions.Worker.Extensions.Http
 nuget Microsoft.Azure.Functions.Worker.Sdk

@@ -21,17 +21,20 @@ type WordValue = { Value : int; Warning : string option }
             ]
 
 module Calculate =
+    let isAsciiUCLetter c =
+        c >= 'A' && c <= 'Z'
+
     let wordValue (logger : ILogger) (text : string) : WordValue =
         Log.info logger (LogEvent.Create("wordValue of {text}", text))
 
         let (letters, nonLetters) =
             text.ToUpper()
             |> List.ofSeq
-            |> List.partition (Char.IsLetter)
+            |> List.partition isAsciiUCLetter
 
         let value =
             letters
-            |> List.sumBy (fun letter -> (int letter) - (int 'A') + 1)
+            |> List.sumBy (fun letter -> (Char.ToUpperInvariant letter |> int) - (int 'A') + 1)
 
         let warning =
             if List.isEmpty nonLetters then
@@ -51,3 +54,22 @@ module Calculate =
             Value   = value
             Warning = warning
         }
+
+    let wordsFromValue (logger : ILogger) (wordValues : (string*int) list) (value : int) : string list list =
+        let rec fit acc ws t =
+            match ws, t with
+            | _          , 0 -> [acc] // That's a solution
+            | []         , _ -> []    // No more words to try
+            | (w,v)::rest, _ ->
+                (if (t < v) then [] else fit (w::acc) ws (t - v)) // Use w and fit the remainder
+                @ (fit acc rest t)                                // Also try without using w
+
+        Log.info logger (LogEvent.Create("wordsFromValue seeking {value}", value))
+
+        let result =
+            fit [] wordValues value
+            |> List.filter (not << List.isEmpty)
+
+        Log.info logger (LogEvent.Create("wordsFromValue got {count} results", result.Length))
+
+        result
