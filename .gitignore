@@ -353,6 +353,7 @@ MigrationBackup/
 *.fs.js
 
 # Parcel output
+*/.parcel-cache
 /WordValues.Azure.JS/WordValue/index.js*
 /WordValues.Aws.JS/WordValue/index.js*
 
