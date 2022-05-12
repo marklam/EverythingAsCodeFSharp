@@ -1,13 +1,26 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "scripts": {
-    "build": "parcel build Function.fs.js --out-dir WordValue --out-file index.js",
-    "test": "echo \"No tests yet...\""
+  "source": "Function.fs.js",
+  "parcel-namer-rewrite": {
+    "chain": "@parcel/namer-default",
+    "rules": {
+      "Function.fs.js": "index.js"
+    }
   },
-  "author": "",
+  "scripts": {
+    "build": "parcel build"
+  },
   "devDependencies": {
-    "parcel-bundler": "^1.12.5"
+    "parcel": "^2.5.0",
+    "parcel-namer-rewrite": "^2.0.0-rc.2"
+  },
+  "targets": {
+    "default": {
+      "distDir": "./WordValue",
+      "context": "node",
+      "outputFormat": "commonjs",
+      "isLibrary": true,
+      "optimize": true,
+      "includeNodeModules": false
+    }
   }
 }

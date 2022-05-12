@@ -124,15 +124,15 @@ let pulumiDeployAzure =
         runExe
             "pulumi"
             (solutionFolder</>"Deployment.Azure")
-            [ "up"; "-y"; "-s"; "dev" ]
+            [ "up"; "-y"; "-s"; "azure-dev" ]
     )
 
 let pulumiDeployAws =
     Target.create "PulumiDeployAws" "Deploy to Aws" (fun _ ->
         runExe
             "pulumi"
-            (solutionFolder</>"Deployment.Azure")
-            [ "up"; "-y"; "-s"; "dev" ]
+            (solutionFolder</>"Deployment.Aws")
+            [ "up"; "-y"; "-s"; "aws-dev" ]
     )
 
 let deployedTest =
